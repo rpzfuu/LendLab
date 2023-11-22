@@ -3,14 +3,14 @@ import 'package:lend_lab/app/widgets/button.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +25,11 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Selamat Datang,',
+                      'Buat Akun Baru',
                       style: TextStyles.xlSemiBold,
                     ),
                     Text(
-                      'Login to continue your journey',
+                      'Create account to continue your journey',
                       style: TextStyles.sReguler.copyWith(color: grey2),
                     )
                   ],
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 280,
                   child: Image(
                     image:
-                        AssetImage('lib/assets/images/login_auth_screen.png'),
+                        AssetImage('lib/assets/images/signup_auth_screen.png'),
                   ),
                 ),
               ),
@@ -51,6 +51,53 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text(
+                      'Full Name',
+                      style: TextStyles.sSemiBold,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: SizedBox(
+                            height: 40,
+                            child: TextFormField(
+                              style: TextStyles.sReguler,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: (40 - 12) / 2, horizontal: 16),
+                                hintText: 'First Name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Expanded(flex: 1, child: SizedBox()),
+                        Expanded(
+                          flex: 10,
+                          child: SizedBox(
+                            height: 40,
+                            child: TextFormField(
+                              style: TextStyles.sReguler,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: (40 - 12) / 2, horizontal: 16),
+                                hintText: 'Last Name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
                     const Text(
                       'Email',
                       style: TextStyles.sSemiBold,
@@ -93,35 +140,22 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Forget Password?',
-                            style:
-                                TextStyles.sMedium.copyWith(color: mainColor),
-                          ),
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: 25),
-                    ButtonPrimary(text: 'Login', onPressed: () {}),
+                    ButtonPrimary(text: 'Create Account', onPressed: () {}),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Don`t have account?',
+                          'Already have account?',
                           style: TextStyles.sMedium.copyWith(color: grey2),
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signup');
+                              Navigator.pushNamed(context, '/login');
                             },
                             child: Text(
-                              'Sign Up',
+                              'Sign In',
                               style:
                                   TextStyles.sMedium.copyWith(color: mainColor),
                             ))

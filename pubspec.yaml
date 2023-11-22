@@ -21,6 +21,7 @@ flutter:
   assets:
     - lib/assets/images/splash_screen.png
     - lib/assets/images/login_auth_screen.png
+    - lib/assets/images/signup_auth_screen.png
   fonts:
     - family: Poppins
       fonts:

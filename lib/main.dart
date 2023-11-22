@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
+import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/app/screens/splash_screen.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 
@@ -15,14 +16,13 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch()
-            .copyWith(primary: mainColor, background: bgBlue),
-        appBarTheme: const AppBarTheme(color: white),
+        colorScheme: ColorScheme.fromSwatch().copyWith(primary: mainColor),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
-        '/login': (context) => const LoginPage()
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
       },
     );
   }

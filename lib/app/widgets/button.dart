@@ -14,7 +14,7 @@ class ButtonPrimary extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           backgroundColor: mainColor,
-          minimumSize: const Size(double.infinity, 60),
+          minimumSize: const Size(double.infinity, 55),
         ),
         onPressed: onPressed,
         child: Text(text, style: TextStyles.lSemiBold));
