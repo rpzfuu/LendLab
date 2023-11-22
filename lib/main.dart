@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
-import 'package:lend_lab/app/screens/home_screen.dart';
+import 'package:lend_lab/app/screens/homepage_screen.dart';
 import 'package:lend_lab/app/screens/splash_screen.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 
