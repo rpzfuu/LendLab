@@ -141,7 +141,11 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    ButtonPrimary(text: 'Create Account', onPressed: () {}),
+                    ButtonPrimary(
+                        text: 'Create Account',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        }),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
+import 'package:lend_lab/app/screens/home_screen.dart';
 import 'package:lend_lab/app/screens/splash_screen.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 
@@ -18,11 +19,12 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(primary: mainColor),
       ),
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
+        '/home': (context) => const HomePage(),
       },
     );
   }

@@ -93,21 +93,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Forget Password?',
-                            style:
-                                TextStyles.sMedium.copyWith(color: mainColor),
-                          ),
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: 25),
-                    ButtonPrimary(text: 'Login', onPressed: () {}),
+                    ButtonPrimary(
+                        text: 'Login',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        }),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
