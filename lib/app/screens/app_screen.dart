@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_home_screen.dart';
+import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
+import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class AppPage extends StatefulWidget {
+  const AppPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AppPage> createState() => _AppPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AppPageState extends State<AppPage> {
   int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -49,11 +52,11 @@ class _HomePageState extends State<HomePage> {
       ),
       body: IndexedStack(
         index: currentPageIndex,
-        children: [
-          Container(child: const Text('1')),
-          Container(child: const Text('2')),
-          Container(child: const Text('3')),
-          Container(child: const Text('4')),
+        children: const [
+          HomePage(),
+          LoginPage(),
+          SignupPage(),
+          HomePage(),
         ],
       ),
     );
