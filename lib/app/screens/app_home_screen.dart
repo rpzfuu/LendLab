@@ -60,8 +60,9 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 42,
                     child: TextFormField(
-                      style: TextStyles.mReguler,
+                      style: TextStyles.mReguler.copyWith(color: grey2),
                       decoration: InputDecoration(
+                        hintText: 'Cari sesuatu',
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: (42 - 14) / 2),
                         prefixIcon: const Icon(Icons.search),
@@ -91,7 +92,9 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 1,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/app/home/list');
+                          },
                           child: const Text(
                             'Details',
                             style: TextStyles.sMedium,

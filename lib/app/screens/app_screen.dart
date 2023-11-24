@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_home_list_screen.dart';
 import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
@@ -52,11 +53,24 @@ class _AppPageState extends State<AppPage> {
       ),
       body: IndexedStack(
         index: currentPageIndex,
-        children: const [
-          HomePage(),
-          LoginPage(),
-          SignupPage(),
-          HomePage(),
+        children: [
+          Navigator(
+            initialRoute: '/app/home/list',
+            onGenerateRoute: (RouteSettings settings) {
+              switch (settings.name) {
+                case '/app/home':
+                  return MaterialPageRoute(
+                      builder: (context) => const HomePage());
+                case '/app/home/list':
+                  return MaterialPageRoute(
+                      builder: (context) => const HomeListPage());
+              }
+              return null;
+            },
+          ),
+          const LoginPage(),
+          const SignupPage(),
+          const HomePage(),
         ],
       ),
     );

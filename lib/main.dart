@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_home_list_screen.dart';
+import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/app/screens/app_screen.dart';
@@ -25,6 +27,8 @@ class MainApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/app': (context) => const AppPage(),
+        '/app/home': (context) => const HomePage(),
+        '/app/home/list': (context) => const HomeListPage(),
       },
     );
   }
