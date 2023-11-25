@@ -64,6 +64,8 @@ class _AppPageState extends State<AppPage> {
                 case '/app/home/list':
                   return MaterialPageRoute(
                       builder: (context) => const HomeListPage());
+                case '/app/home/list/detail':
+                  Navigator.pushNamed(context, '/app/home/list/detail');
               }
               return null;
             },

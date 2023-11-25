@@ -79,3 +79,22 @@ class ButtonBatal extends StatelessWidget {
             Text(text, style: TextStyles.lMedium.copyWith(color: mainColor)));
   }
 }
+
+class ButtonHapus extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const ButtonHapus({super.key, required this.text, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          minimumSize: const Size(150, 60),
+        ),
+        onPressed: onPressed,
+        child: Text(text, style: TextStyles.lMedium.copyWith(color: white)));
+  }
+}

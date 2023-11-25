@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_home_list_detail_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_screen.dart';
 import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
@@ -21,7 +22,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(primary: mainColor),
       ),
-      initialRoute: '/app',
+      initialRoute: '/app/home/list/detail',
       routes: {
         '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginPage(),
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         '/app': (context) => const AppPage(),
         '/app/home': (context) => const HomePage(),
         '/app/home/list': (context) => const HomeListPage(),
+        '/app/home/list/detail': (context) => const HomeListDetailPage(),
       },
     );
   }

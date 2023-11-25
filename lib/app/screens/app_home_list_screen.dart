@@ -14,6 +14,7 @@ class _HomeListPageState extends State<HomeListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -63,8 +64,7 @@ class _HomeListPageState extends State<HomeListPage> {
                   ],
                 ),
               ),
-              Container(
-                color: background,
+              Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
@@ -85,7 +85,10 @@ class _HomeListPageState extends State<HomeListPage> {
                                 height: 20,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, '/app/home/list/detail');
+                                },
                                 child: Column(
                                   children: [
                                     Row(
@@ -167,7 +170,10 @@ class _HomeListPageState extends State<HomeListPage> {
                               ),
                               const SizedBox(height: 20),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, '/app/home/list/detail');
+                                },
                                 child: Column(
                                   children: [
                                     Row(
@@ -264,7 +270,10 @@ class _HomeListPageState extends State<HomeListPage> {
                                 height: 20,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, '/app/home/list/detail');
+                                },
                                 child: Column(
                                   children: [
                                     Row(
@@ -346,7 +355,10 @@ class _HomeListPageState extends State<HomeListPage> {
                               ),
                               const SizedBox(height: 20),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, '/app/home/list/detail');
+                                },
                                 child: Column(
                                   children: [
                                     Row(
@@ -428,7 +440,10 @@ class _HomeListPageState extends State<HomeListPage> {
                               ),
                               const SizedBox(height: 20),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, '/app/home/list/detail');
+                                },
                                 child: Column(
                                   children: [
                                     Row(
