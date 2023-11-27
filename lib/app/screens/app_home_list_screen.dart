@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/widgets/appbar.dart';
 import 'package:lend_lab/app/widgets/button.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
@@ -19,51 +20,8 @@ class _HomeListPageState extends State<HomeListPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                color: white,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back_ios_new,
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(30, 15, 30, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    'Peminjaman',
-                                    style: TextStyles.xlSemiBold,
-                                  ),
-                                  Text(
-                                    'Daftar Peminjaman',
-                                    style: TextStyles.sReguler
-                                        .copyWith(color: grey2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              const AppBarNormal(
+                  text: 'Peminjaman', subtext: 'Daftar Peminjaman'),
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(

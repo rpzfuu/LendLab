@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_add_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_screen.dart';
 import 'package:lend_lab/app/screens/app_home_screen.dart';
-import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 
@@ -13,7 +13,7 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +55,7 @@ class _AppPageState extends State<AppPage> {
         index: currentPageIndex,
         children: [
           Navigator(
-            initialRoute: '/app/home/list',
+            initialRoute: '/app/home',
             onGenerateRoute: (RouteSettings settings) {
               switch (settings.name) {
                 case '/app/home':
@@ -70,7 +70,7 @@ class _AppPageState extends State<AppPage> {
               return null;
             },
           ),
-          const LoginPage(),
+          const AddPage(),
           const SignupPage(),
           const HomePage(),
         ],

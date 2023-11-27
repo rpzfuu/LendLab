@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lend_lab/app/widgets/appbar.dart';
 import 'package:lend_lab/app/widgets/button.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
@@ -73,51 +74,8 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                color: white,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back_ios_new,
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(30, 15, 30, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    'Peminjaman',
-                                    style: TextStyles.xlSemiBold,
-                                  ),
-                                  Text(
-                                    'Daftar Peminjaman',
-                                    style: TextStyles.sReguler
-                                        .copyWith(color: grey2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              const AppBarNormal(
+                  text: 'Detail Peminjaman', subtext: 'Detail data peminjaman'),
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
@@ -150,7 +108,7 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                             child: Icon(
                               Icons.edit,
                               color: mainColor,
-                              size: 16,
+                              size: 18,
                             ),
                           ),
                         ),
@@ -166,7 +124,7 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                     ),
                     const SizedBox(height: 15),
                     SizedBox(
-                      height: 31,
+                      height: 42,
                       child: TextFormField(
                         controller: _dateController,
                         readOnly: true,
@@ -175,16 +133,14 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                           _selectDate(context);
                         },
                         style: TextStyles.mReguler.copyWith(color: grey3),
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: (31 - 14) / 2 + 15),
-                          suffixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
-                            child: Icon(
-                              Icons.date_range,
-                              color: mainColor,
-                              size: 16,
-                            ),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: (42 - 14) / 2, horizontal: 10),
+                          suffixIcon: const Icon(
+                            Icons.date_range,
+                            color: mainColor,
                           ),
                         ),
                       ),
@@ -210,7 +166,7 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                             child: Icon(
                               Icons.edit,
                               color: mainColor,
-                              size: 16,
+                              size: 18,
                             ),
                           ),
                         ),
@@ -240,7 +196,10 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                       ),
                     ),
                     const SizedBox(height: 50),
-                    ButtonPrimary(text: 'Simpan Perubahan', onPressed: () {}),
+                    ButtonPrimary(
+                        isEnable: true,
+                        text: 'Simpan Perubahan',
+                        onPressed: () {}),
                   ],
                 ),
               )

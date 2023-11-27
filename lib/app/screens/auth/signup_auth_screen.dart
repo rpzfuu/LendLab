@@ -11,6 +11,12 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  final _firstnameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool terisi = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +69,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: SizedBox(
                             height: 40,
                             child: TextFormField(
+                              controller: _firstnameController,
                               style: TextStyles.sReguler,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
@@ -82,6 +89,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: SizedBox(
                             height: 40,
                             child: TextFormField(
+                              controller: _lastnameController,
                               style: TextStyles.sReguler,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
@@ -106,6 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                     SizedBox(
                       height: 40,
                       child: TextFormField(
+                        controller: _emailController,
                         style: TextStyles.sReguler,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -127,6 +136,7 @@ class _SignupPageState extends State<SignupPage> {
                     SizedBox(
                       height: 40,
                       child: TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         style: TextStyles.sReguler,
                         keyboardType: TextInputType.text,
@@ -142,6 +152,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 25),
                     ButtonPrimary(
+                        isEnable: terisi,
                         text: 'Create Account',
                         onPressed: () {
                           Navigator.pushNamed(context, '/home');

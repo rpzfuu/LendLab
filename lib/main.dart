@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_add_barang_screen.dart';
+import 'package:lend_lab/app/screens/app_add_screen.dart';
+import 'package:lend_lab/app/screens/app_add_uang_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_detail_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_screen.dart';
 import 'package:lend_lab/app/screens/app_home_screen.dart';
@@ -22,7 +25,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(primary: mainColor),
       ),
-      initialRoute: '/app/home/list/detail',
+      initialRoute: '/app',
       routes: {
         '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginPage(),
@@ -31,6 +34,9 @@ class MainApp extends StatelessWidget {
         '/app/home': (context) => const HomePage(),
         '/app/home/list': (context) => const HomeListPage(),
         '/app/home/list/detail': (context) => const HomeListDetailPage(),
+        '/app/add': (context) => const AddPage(),
+        '/app/add/uang': (context) => const AddUangPage(),
+        '/app/add/barang': (context) => const AddBarangPage(),
       },
     );
   }
