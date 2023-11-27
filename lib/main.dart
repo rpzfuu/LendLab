@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/app/screens/app_add_barang_screen.dart';
 import 'package:lend_lab/app/screens/app_add_screen.dart';
+import 'package:lend_lab/app/screens/app_add_success_screen.dart';
 import 'package:lend_lab/app/screens/app_add_uang_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_detail_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_screen.dart';
@@ -37,6 +38,7 @@ class MainApp extends StatelessWidget {
         '/app/add': (context) => const AddPage(),
         '/app/add/uang': (context) => const AddUangPage(),
         '/app/add/barang': (context) => const AddBarangPage(),
+        '/app/add/success': (context) => const AddSuccessPage(),
       },
     );
   }

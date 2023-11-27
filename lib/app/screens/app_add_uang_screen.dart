@@ -299,7 +299,10 @@ class _AddUangPageState extends State<AddUangPage> {
           child: ButtonPrimary(
             isEnable: terisi,
             text: 'Lanjutkan',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/app/add/success', (route) => false);
+            },
           ),
         ),
       ),
