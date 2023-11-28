@@ -152,10 +152,10 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 25),
                     ButtonPrimary(
-                        isEnable: terisi,
+                        isEnable: true,
                         text: 'Create Account',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          Navigator.pushNamed(context, '/app');
                         }),
                     const SizedBox(height: 30),
                     Row(

@@ -137,7 +137,7 @@ class AppBarHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: white,
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(15),
       child: Column(
         children: [
           Row(

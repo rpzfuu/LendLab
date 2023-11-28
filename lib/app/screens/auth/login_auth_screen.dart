@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         isEnable: true,
                         text: 'Login',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          Navigator.pushNamed(context, '/app');
                         }),
                     const SizedBox(height: 30),
                     Row(

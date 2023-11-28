@@ -89,7 +89,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           border: Border(
                               bottom: BorderSide(width: 1, color: grey2))),
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/splash', (route) => false);
+                        },
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
                           padding: const EdgeInsets.all(0),
