@@ -11,6 +11,7 @@ const grey1 = Color(0xFFDDE5E9);
 const grey2 = Color(0xFFC7C9D9);
 const grey3 = Color(0xFF828282);
 const grey4 = Color(0xFFBDBDBD);
+const grey5 = Color(0xFF1E1E1E);
 const darkergrey = Color(0xFFBFBFBF);
 const background = Color(0xFFF6F9FF);
 const white = Colors.white;

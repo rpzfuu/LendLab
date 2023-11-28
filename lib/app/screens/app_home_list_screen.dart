@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lend_lab/app/widgets/appbar.dart';
-import 'package:lend_lab/app/widgets/button.dart';
+import 'package:lend_lab/app/widgets/appbar_widget.dart';
+import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 

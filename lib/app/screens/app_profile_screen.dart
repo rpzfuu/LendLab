@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lend_lab/app/widgets/appbar.dart';
+import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
@@ -33,9 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(
                                 height: 75,
                                 width: 75,
-                                child: Image(
-                                  image: AssetImage(''),
-                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 15),

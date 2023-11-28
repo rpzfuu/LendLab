@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
@@ -18,65 +19,8 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.all(30),
-              color: white,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Hi, Felicia',
-                              style: TextStyles.xlSemiBold,
-                            ),
-                            Text(
-                              'Welcome!',
-                              style: TextStyles.sReguler.copyWith(color: grey2),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: Image(
-                            image: AssetImage(
-                                'lib/assets/images/login_auth_screen.png'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    height: 42,
-                    child: TextFormField(
-                      style: TextStyles.mReguler.copyWith(color: grey2),
-                      decoration: InputDecoration(
-                        hintText: 'Cari sesuatu',
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: (42 - 14) / 2),
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: background,
+            const AppBarWelcome(nama: 'Felicia'),
+            Padding(
               padding: const EdgeInsets.all(30),
               child: Column(
                 children: [
@@ -90,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: TextButton(
                           onPressed: () {
                             Navigator.pushNamed(context, '/app/home/list');

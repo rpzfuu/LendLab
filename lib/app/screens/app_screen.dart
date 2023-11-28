@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/app/screens/app_add_screen.dart';
+import 'package:lend_lab/app/screens/app_history_screen.dart';
 
 import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/app_profile_screen.dart';
-import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
+
 import 'package:lend_lab/theme/app_colors.dart';
 
 class AppPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  int currentPageIndex = 3;
+  int currentPageIndex = 2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,7 @@ class _AppPageState extends State<AppPage> {
         children: const [
           HomePage(),
           AddPage(),
-          SignupPage(),
+          HistoryPage(),
           ProfilePage(),
         ],
       ),

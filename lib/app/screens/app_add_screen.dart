@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lend_lab/app/widgets/appbar.dart';
-import 'package:lend_lab/app/widgets/button.dart';
+import 'package:lend_lab/app/widgets/appbar_widget.dart';
+import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
@@ -130,7 +130,7 @@ class _AddPageState extends State<AddPage> {
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 40),
         child: BottomAppBar(
           child: ButtonPrimary(
-            isEnable: true,
+            isEnable: _pilihBarang || _pilihUang,
             text: 'Lanjutkan',
             onPressed: () {
               if (_pilihUang) Navigator.pushNamed(context, '/app/add/uang');
