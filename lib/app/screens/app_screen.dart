@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/app/screens/app_add_screen.dart';
-import 'package:lend_lab/app/screens/app_home_list_screen.dart';
+
 import 'package:lend_lab/app/screens/app_home_screen.dart';
+import 'package:lend_lab/app/screens/app_profile_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 
@@ -13,7 +14,7 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +25,14 @@ class _AppPageState extends State<AppPage> {
           showUnselectedLabels: false,
           currentIndex: currentPageIndex,
           onTap: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
+            switch (index) {
+              case 1:
+                Navigator.pushNamed(context, '/app/add');
+              default:
+                setState(() {
+                  currentPageIndex = index;
+                });
+            }
           },
           backgroundColor: white,
           selectedItemColor: mainColor,
@@ -53,26 +59,11 @@ class _AppPageState extends State<AppPage> {
       ),
       body: IndexedStack(
         index: currentPageIndex,
-        children: [
-          Navigator(
-            initialRoute: '/app/home',
-            onGenerateRoute: (RouteSettings settings) {
-              switch (settings.name) {
-                case '/app/home':
-                  return MaterialPageRoute(
-                      builder: (context) => const HomePage());
-                case '/app/home/list':
-                  return MaterialPageRoute(
-                      builder: (context) => const HomeListPage());
-                case '/app/home/list/detail':
-                  Navigator.pushNamed(context, '/app/home/list/detail');
-              }
-              return null;
-            },
-          ),
-          const AddPage(),
-          const SignupPage(),
-          const HomePage(),
+        children: const [
+          HomePage(),
+          AddPage(),
+          SignupPage(),
+          ProfilePage(),
         ],
       ),
     );

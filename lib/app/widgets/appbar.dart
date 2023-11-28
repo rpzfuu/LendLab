@@ -6,6 +6,7 @@ class AppBarNormal extends StatelessWidget {
   final String text;
   final String subtext;
   const AppBarNormal({super.key, required this.text, required this.subtext});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,9 +21,14 @@ class AppBarNormal extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
                     child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: ModalRoute.of(context)?.settings.name != '/app'
+                          ? () {
+                              Navigator.pop(context);
+                            }
+                          : () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/app', (route) => false);
+                            },
                       icon: const Icon(
                         Icons.arrow_back_ios_new,
                         color: black,
@@ -38,10 +44,13 @@ class AppBarNormal extends StatelessWidget {
                           text,
                           style: TextStyles.xlSemiBold,
                         ),
-                        Text(
-                          subtext,
-                          style: TextStyles.sReguler.copyWith(color: grey2),
-                        ),
+                        subtext.isNotEmpty
+                            ? Text(
+                                subtext,
+                                style:
+                                    TextStyles.sReguler.copyWith(color: grey2),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),

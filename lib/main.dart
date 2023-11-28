@@ -6,6 +6,7 @@ import 'package:lend_lab/app/screens/app_add_uang_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_detail_screen.dart';
 import 'package:lend_lab/app/screens/app_home_list_screen.dart';
 import 'package:lend_lab/app/screens/app_home_screen.dart';
+import 'package:lend_lab/app/screens/app_profile_screen.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/app/screens/app_screen.dart';
@@ -39,6 +40,7 @@ class MainApp extends StatelessWidget {
         '/app/add/uang': (context) => const AddUangPage(),
         '/app/add/barang': (context) => const AddBarangPage(),
         '/app/add/success': (context) => const AddSuccessPage(),
+        '/app/profile': (context) => const ProfilePage(),
       },
     );
   }
