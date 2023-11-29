@@ -30,12 +30,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Column(
                             children: [
-                              const SizedBox(
-                                height: 75,
-                                width: 75,
+                              SizedBox(
+                                height: 45,
+                                width: 45,
+                                child: Transform.scale(
+                                  scale: 2.5,
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset(
+                                        "lib/assets/images/profile.png"), // Sesuaikan path gambar
+                                  ),
+                                ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 15),
+                                padding: const EdgeInsets.only(top: 35),
                                 child: Text(
                                   'Felicia',
                                   style: TextStyles.xlSemiBold
