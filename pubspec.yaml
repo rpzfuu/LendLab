@@ -23,7 +23,9 @@ flutter:
     - lib/assets/images/login_auth_screen.png
     - lib/assets/images/signup_auth_screen.png
     - lib/assets/images/barang.png
-    - lib/assets/images/uang.png
+    - lib/assets/images/gambar_uang.png
+    - lib/assets/images/profile.png
+
   fonts:
     - family: Poppins
       fonts:
