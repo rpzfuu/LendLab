@@ -31,13 +31,28 @@ class CardHistory extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const SizedBox(
+                  Container(
                     height: 37,
                     width: 37,
+                    decoration: BoxDecoration(
+                      color: mainColor, // Warna latar belakang box
+                      borderRadius:
+                          BorderRadius.circular(12.0), // Sudut yang dibulatkan
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        'lib/assets/images/gambar_uang.png', // Sesuaikan path gambar
+                        height: 30, // Sesuaikan dengan tinggi box
+                        width: 30, // Sesuaikan dengan lebar box
+                      ),
+                    ),
                   ),
-                  Text(
-                    'Rp. 1000000',
-                    style: TextStyles.sMedium.copyWith(color: Colors.black),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Text(
+                      'Rp. 1000000',
+                      style: TextStyles.sMedium.copyWith(color: Colors.black),
+                    ),
                   ),
                   Expanded(
                       child: Row(
