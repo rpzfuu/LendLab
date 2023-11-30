@@ -62,7 +62,7 @@ class _HomeListPageState extends State<HomeListPage> {
                                                 width: 52,
                                                 child: Image(
                                                   image: AssetImage(
-                                                      'lib/assets/images/login_auth_screen.png'),
+                                                      'lib/assets/images/uang.png'),
                                                 ),
                                               ),
                                             ],
@@ -147,7 +147,7 @@ class _HomeListPageState extends State<HomeListPage> {
                                                 width: 52,
                                                 child: Image(
                                                   image: AssetImage(
-                                                      'lib/assets/images/login_auth_screen.png'),
+                                                      'lib/assets/images/uang.png'),
                                                 ),
                                               ),
                                             ],
@@ -247,7 +247,7 @@ class _HomeListPageState extends State<HomeListPage> {
                                                 width: 52,
                                                 child: Image(
                                                   image: AssetImage(
-                                                      'lib/assets/images/login_auth_screen.png'),
+                                                      'lib/assets/images/barang.png'),
                                                 ),
                                               ),
                                             ],
@@ -332,7 +332,7 @@ class _HomeListPageState extends State<HomeListPage> {
                                                 width: 52,
                                                 child: Image(
                                                   image: AssetImage(
-                                                      'lib/assets/images/login_auth_screen.png'),
+                                                      'lib/assets/images/barang.png'),
                                                 ),
                                               ),
                                             ],
@@ -417,7 +417,7 @@ class _HomeListPageState extends State<HomeListPage> {
                                                 width: 52,
                                                 child: Image(
                                                   image: AssetImage(
-                                                      'lib/assets/images/login_auth_screen.png'),
+                                                      'lib/assets/images/barang.png'),
                                                 ),
                                               ),
                                             ],
