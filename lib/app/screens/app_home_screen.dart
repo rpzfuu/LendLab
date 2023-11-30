@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
                       const Expanded(
                         flex: 5,
                         child: Text(
-                          'Peminjaman Terkahir',
+                          'Peminjaman Terakhir',
                           style: TextStyles.lSemiBold,
                         ),
                       ),
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 52,
                                         child: Image(
                                           image: AssetImage(
-                                              'lib/assets/images/login_auth_screen.png'),
+                                              'lib/assets/images/uang.png'),
                                         ),
                                       ),
                                     ],
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 52,
                                         child: Image(
                                           image: AssetImage(
-                                              'lib/assets/images/login_auth_screen.png'),
+                                              'lib/assets/images/uang.png'),
                                         ),
                                       ),
                                     ],
@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 52,
                                         child: Image(
                                           image: AssetImage(
-                                              'lib/assets/images/login_auth_screen.png'),
+                                              'lib/assets/images/barang.png'),
                                         ),
                                       ),
                                     ],
@@ -246,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        'Rp 500.000',
+                                        'Barang',
                                         style: TextStyles.sMedium,
                                       )
                                     ],
@@ -268,7 +268,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 52,
                                         child: Image(
                                           image: AssetImage(
-                                              'lib/assets/images/login_auth_screen.png'),
+                                              'lib/assets/images/barang.png'),
                                         ),
                                       ),
                                     ],
@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        'Rp 500.000',
+                                        'Barang',
                                         style: TextStyles.sMedium,
                                       )
                                     ],
@@ -321,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 52,
                                         child: Image(
                                           image: AssetImage(
-                                              'lib/assets/images/login_auth_screen.png'),
+                                              'lib/assets/images/barang.png'),
                                         ),
                                       ),
                                     ],
@@ -352,7 +352,7 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        'Rp 500.000',
+                                        'Barang',
                                         style: TextStyles.sMedium,
                                       )
                                     ],
