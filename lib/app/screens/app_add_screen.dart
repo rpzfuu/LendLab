@@ -41,11 +41,11 @@ class _AddPageState extends State<AddPage> {
                           children: [
                             const Center(
                               child: SizedBox(
-                                height: 160,
+                                height: 150,
                                 width: 280,
                                 child: Image(
                                     image: AssetImage(
-                                        'lib/assets/images/login_auth_screen.png')),
+                                        'lib/assets/images/add_uang.png')),
                               ),
                             ),
                             const Text(
@@ -87,11 +87,11 @@ class _AddPageState extends State<AddPage> {
                           children: [
                             const Center(
                               child: SizedBox(
-                                height: 160,
+                                height: 150,
                                 width: 280,
                                 child: Image(
                                     image: AssetImage(
-                                        'lib/assets/images/login_auth_screen.png')),
+                                        'lib/assets/images/add_barang.png')),
                               ),
                             ),
                             const Text(
