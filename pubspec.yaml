@@ -25,6 +25,7 @@ flutter:
     - lib/assets/images/barang.png
     - lib/assets/images/gambar_uang.png
     - lib/assets/images/profile.png
+    - lib/assets/images/uang.png
 
   fonts:
     - family: Poppins
