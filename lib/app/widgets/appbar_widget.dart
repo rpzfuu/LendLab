@@ -66,7 +66,8 @@ class AppBarNormal extends StatelessWidget {
 
 class AppBarWelcome extends StatelessWidget {
   final String nama;
-  const AppBarWelcome({required this.nama, super.key});
+  final ValueChanged<String> onChanged;
+  const AppBarWelcome({required this.nama, super.key, required this.onChanged});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,8 +99,7 @@ class AppBarWelcome extends StatelessWidget {
                   height: 50,
                   width: 50,
                   child: Image(
-                    image:
-                        AssetImage('lib/assets/images/profile.png'),
+                    image: AssetImage('lib/assets/images/profile.png'),
                   ),
                 ),
               ),
@@ -111,6 +111,7 @@ class AppBarWelcome extends StatelessWidget {
           SizedBox(
             height: 42,
             child: TextFormField(
+              onChanged: onChanged,
               style: TextStyles.mReguler.copyWith(color: black),
               decoration: InputDecoration(
                 hintStyle: TextStyles.mReguler.copyWith(color: grey2),

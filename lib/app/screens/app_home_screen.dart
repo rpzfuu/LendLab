@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
+import 'package:lend_lab/app/widgets/list_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
@@ -11,15 +13,76 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String searchQuery = '';
+  List<Map<String, dynamic>> dataListUang = [
+    {
+      'id': 1,
+      'nama': 'Mas Mursyid',
+      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
+      'jumlah': 50000
+    },
+    {
+      'id': 2,
+      'nama': 'Pace Kanaeru',
+      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
+      'jumlah': 20000
+    },
+    {
+      'id': 3,
+      'nama': 'Wak Abdul Sungai Musi',
+      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
+      'jumlah': 100000
+    },
+  ];
+  List<Map<String, dynamic>> dataListBarang = [
+    {
+      'id': 1,
+      'nama': 'Mas Amba',
+      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
+      'barang': 'Handuk Mas Fuad'
+    },
+    {
+      'id': 2,
+      'nama': 'Mas Rusdi',
+      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
+      'barang': 'Baju Si Imut'
+    },
+    {
+      'id': 3,
+      'nama': 'Pak Asep',
+      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
+      'barang': 'Celana Mas Mursyid'
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> filteredDataListUang =
+        dataListUang.where((item) {
+      return item['nama'].toLowerCase().contains(searchQuery.toLowerCase()) ||
+          item['tanggal'].toLowerCase().contains(searchQuery.toLowerCase()) ||
+          item['jumlah'].toString().contains(searchQuery);
+    }).toList();
+    List<Map<String, dynamic>> filteredDataListBarang =
+        dataListBarang.where((item) {
+      return item['nama'].toLowerCase().contains(searchQuery.toLowerCase()) ||
+          item['tanggal'].toLowerCase().contains(searchQuery.toLowerCase()) ||
+          item['barang'].toLowerCase().contains(searchQuery.toLowerCase());
+    }).toList();
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
           children: [
-            const AppBarWelcome(nama: 'Felicia'),
+            AppBarWelcome(
+              nama: 'Felicia',
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
+            ),
             Padding(
               padding: const EdgeInsets.all(30),
               child: Column(
@@ -67,114 +130,18 @@ class _HomePageState extends State<HomePage> {
                               height: 1,
                               color: grey1,
                             ),
-                            const SizedBox(
-                              height: 15,
+                            ListView(
+                              shrinkWrap: true,
+                              children: List.generate(
+                                filteredDataListUang.length,
+                                (index) => ListHomeUang(
+                                  nama: filteredDataListUang[index]['nama'],
+                                  tanggal: filteredDataListUang[index]
+                                      ['tanggal'],
+                                  jumlah: filteredDataListUang[index]['jumlah'],
+                                ),
+                              ),
                             ),
-                            Row(
-                              children: [
-                                const Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 47,
-                                        width: 52,
-                                        child: Image(
-                                          image: AssetImage(
-                                              'lib/assets/images/uang.png'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Meri Ngutang'),
-                                      Wrap(
-                                        children: [
-                                          Text(
-                                            '17 Sep 2023',
-                                            style: TextStyles.sMedium
-                                                .copyWith(color: red),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Rp 500.000',
-                                        style: TextStyles.sMedium,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Row(
-                              children: [
-                                const Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 47,
-                                        width: 52,
-                                        child: Image(
-                                          image: AssetImage(
-                                              'lib/assets/images/uang.png'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Meri Ngutang'),
-                                      Wrap(
-                                        children: [
-                                          Text(
-                                            '17 Sep 2023',
-                                            style: TextStyles.sMedium
-                                                .copyWith(color: red),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Rp 500.000',
-                                        style: TextStyles.sMedium,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
                           ]),
                     ),
                   ),
@@ -199,167 +166,19 @@ class _HomePageState extends State<HomePage> {
                               height: 1,
                               color: grey1,
                             ),
-                            const SizedBox(
-                              height: 15,
+                            ListView(
+                              shrinkWrap: true,
+                              children: List.generate(
+                                filteredDataListBarang.length,
+                                (index) => ListHomeBarang(
+                                  nama: filteredDataListBarang[index]['nama'],
+                                  tanggal: filteredDataListBarang[index]
+                                      ['tanggal'],
+                                  barang: filteredDataListBarang[index]
+                                      ['barang'],
+                                ),
+                              ),
                             ),
-                            Row(
-                              children: [
-                                const Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 47,
-                                        width: 52,
-                                        child: Image(
-                                          image: AssetImage(
-                                              'lib/assets/images/barang.png'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Dina Minjam Baju'),
-                                      Wrap(
-                                        children: [
-                                          Text(
-                                            '20 Sep 2023',
-                                            style: TextStyles.sMedium
-                                                .copyWith(color: red),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Barang',
-                                        style: TextStyles.sMedium,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Row(
-                              children: [
-                                const Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 47,
-                                        width: 52,
-                                        child: Image(
-                                          image: AssetImage(
-                                              'lib/assets/images/barang.png'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Dina Minjam Baju'),
-                                      Wrap(
-                                        children: [
-                                          Text(
-                                            '20 Sep 2023',
-                                            style: TextStyles.sMedium
-                                                .copyWith(color: red),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Barang',
-                                        style: TextStyles.sMedium,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Row(
-                              children: [
-                                const Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 47,
-                                        width: 52,
-                                        child: Image(
-                                          image: AssetImage(
-                                              'lib/assets/images/barang.png'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Dina Minjam Baju'),
-                                      Wrap(
-                                        children: [
-                                          Text(
-                                            '20 Sep 2023',
-                                            style: TextStyles.sMedium
-                                                .copyWith(color: red),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Barang',
-                                        style: TextStyles.sMedium,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
                           ]),
                     ),
                   ),
