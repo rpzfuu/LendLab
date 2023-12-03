@@ -18,8 +18,8 @@ class ListHomeUang extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15),
       child: Row(
         children: [
-          const Expanded(
-            flex: 1,
+          const Padding(
+            padding: EdgeInsets.only(right: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,8 +84,8 @@ class ListHomeBarang extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15),
       child: Row(
         children: [
-          const Expanded(
-            flex: 1,
+          const Padding(
+            padding: EdgeInsets.only(right: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

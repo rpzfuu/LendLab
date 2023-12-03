@@ -13,10 +13,14 @@ class AddUangPage extends StatefulWidget {
 }
 
 class _AddUangPageState extends State<AddUangPage> {
+  final _namaPeminjamController = TextEditingController();
   final _namaNilaiController = TextEditingController();
+  final _dateController = TextEditingController();
   bool terisi = false;
   void isTerisi() {
-    bool temp = _namaNilaiController.text.isNotEmpty;
+    bool temp = _namaNilaiController.text.isNotEmpty &&
+        _namaPeminjamController.text.isNotEmpty &&
+        _dateController.text.isNotEmpty;
     setState(() {
       terisi = temp;
     });
@@ -26,10 +30,11 @@ class _AddUangPageState extends State<AddUangPage> {
   void initState() {
     super.initState();
     _namaNilaiController.addListener(isTerisi);
+    _namaPeminjamController.addListener(isTerisi);
+    _dateController.addListener(isTerisi);
   }
 
   DateTime _selectedDate = DateTime.now();
-  final _dateController = TextEditingController();
   void _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -75,6 +80,7 @@ class _AddUangPageState extends State<AddUangPage> {
                     SizedBox(
                       height: 39,
                       child: TextFormField(
+                        controller: _namaPeminjamController,
                         style: TextStyles.lSemiBold,
                         decoration: const InputDecoration(
                           hintText: 'Nama Peminjam',
@@ -87,7 +93,7 @@ class _AddUangPageState extends State<AddUangPage> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Tanggal Pengembalian',
+                        'Tanggal Meminjam',
                         style: TextStyles.lMedium,
                       ),
                     ),
