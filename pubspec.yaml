@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
   intl: ^0.18.1
 
 dev_dependencies:
@@ -28,7 +29,8 @@ flutter:
     - lib/assets/images/uang.png
     - lib/assets/images/add_uang.png
     - lib/assets/images/add_barang.png
-
+    - lib/assets/images/profil_kosong.png
+  
   fonts:
     - family: Poppins
       fonts:
