@@ -99,7 +99,7 @@ class AppBarWelcome extends StatelessWidget {
                   height: 50,
                   width: 50,
                   child: Image(
-                    image: AssetImage('lib/assets/images/profile.png'),
+                    image: AssetImage("lib/assets/images/profil_kosong.png"),
                   ),
                 ),
               ),
