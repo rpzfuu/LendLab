@@ -3,7 +3,18 @@ import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
 class CardHistory extends StatelessWidget {
-  const CardHistory({super.key});
+  final String nama;
+  final String jumlah;
+  final String jenis;
+  final String peminjaman;
+  final String pengembalian;
+  const CardHistory(
+      {super.key,
+      required this.nama,
+      required this.jumlah,
+      required this.jenis,
+      required this.peminjaman,
+      required this.pengembalian});
 
   @override
   Widget build(BuildContext context) {
@@ -35,23 +46,35 @@ class CardHistory extends StatelessWidget {
                     height: 37,
                     width: 37,
                     decoration: BoxDecoration(
-                      color: mainColor, // Warna latar belakang box
-                      borderRadius:
-                          BorderRadius.circular(12.0), // Sudut yang dibulatkan
+                      color: mainColor,
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Center(
                       child: Image.asset(
-                        'lib/assets/images/gambar_uang.png', // Sesuaikan path gambar
-                        height: 30, // Sesuaikan dengan tinggi box
-                        width: 30, // Sesuaikan dengan lebar box
+                        jenis == 'uang'
+                            ? 'lib/assets/images/gambar_uang.png'
+                            : 'lib/assets/images/barang.png',
+                        height: 30,
+                        width: 30,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Text(
-                      'Rp. 1000000',
-                      style: TextStyles.sMedium.copyWith(color: Colors.black),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          nama,
+                          style:
+                              TextStyles.sMedium.copyWith(color: Colors.black),
+                        ),
+                        Text(
+                          jenis == 'uang' ? 'Rp $jumlah' : jumlah,
+                          style:
+                              TextStyles.sMedium.copyWith(color: Colors.black),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -97,7 +120,7 @@ class CardHistory extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      '25 Juni 2023',
+                      peminjaman,
                       style: TextStyles.sReguler.copyWith(color: Colors.black),
                     ),
                   ),
@@ -105,7 +128,7 @@ class CardHistory extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        '29 Juni 2023',
+                        pengembalian,
                         style:
                             TextStyles.sReguler.copyWith(color: Colors.black),
                       ),

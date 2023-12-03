@@ -132,7 +132,9 @@ class AppBarWelcome extends StatelessWidget {
 
 class AppBarHistory extends StatelessWidget {
   final String title;
-  const AppBarHistory({super.key, required this.title});
+  final ValueChanged<String> onChanged;
+  const AppBarHistory(
+      {super.key, required this.title, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +192,7 @@ class AppBarHistory extends StatelessWidget {
             child: SizedBox(
               height: 42,
               child: TextFormField(
+                onChanged: onChanged,
                 style: TextStyles.mReguler.copyWith(color: black),
                 decoration: InputDecoration(
                   hintStyle: TextStyles.mReguler.copyWith(color: grey2),

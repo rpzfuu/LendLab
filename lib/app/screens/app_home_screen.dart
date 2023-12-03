@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> dataListUang = [
     {
       'id': 1,
-      'nama': 'Mas Mursyid',
+      'nama': 'Yanto "Pasuruan" gempa bumi',
       'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
       'jumlah': 50000
     },

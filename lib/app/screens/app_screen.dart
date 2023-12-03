@@ -15,7 +15,7 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
