@@ -99,6 +99,8 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 2,
                         child: TextButton(
+                          style: TextButton.styleFrom(
+                              alignment: Alignment.centerRight),
                           onPressed: () {
                             Navigator.pushNamed(context, '/app/home/list');
                           },

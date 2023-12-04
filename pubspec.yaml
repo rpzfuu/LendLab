@@ -30,7 +30,7 @@ flutter:
     - lib/assets/images/add_uang.png
     - lib/assets/images/add_barang.png
     - lib/assets/images/profil_kosong.png
-  
+
   fonts:
     - family: Poppins
       fonts:
