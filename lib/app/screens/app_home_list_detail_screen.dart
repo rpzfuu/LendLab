@@ -13,6 +13,26 @@ class HomeListDetailPage extends StatefulWidget {
 }
 
 class _HomeListDetailPageState extends State<HomeListDetailPage> {
+  final _namaController = TextEditingController();
+  final _jumlahController = TextEditingController();
+  bool _isTerisi = false;
+  void isTerisi() {
+    bool temp = _namaController.text.isNotEmpty &&
+        _jumlahController.text.isNotEmpty &&
+        _dateController.text.isNotEmpty;
+    setState(() {
+      _isTerisi = temp;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _namaController.addListener(isTerisi);
+    _jumlahController.addListener(isTerisi);
+    _dateController.addListener(isTerisi);
+  }
+
   final _dateController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
 
@@ -80,14 +100,10 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 160,
-                      width: 300,
-                      child: Image(
-                        image:
-                            AssetImage('lib/assets/images/splash_screen.png'),
-                      ),
+                    const Image(
+                      image: AssetImage('lib/assets/images/add_uang.png'),
                     ),
+                    const SizedBox(height: 25),
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -99,6 +115,7 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                     SizedBox(
                       height: 31,
                       child: TextFormField(
+                        controller: _namaController,
                         style: TextStyles.mReguler,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -157,10 +174,15 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                     SizedBox(
                       height: 31,
                       child: TextFormField(
+                        controller: _jumlahController,
                         style: TextStyles.mReguler,
                         decoration: const InputDecoration(
+                          prefixIcon: Text(
+                            'Rp',
+                            style: TextStyles.mReguler,
+                          ),
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: (31 - 14) / 2 + 15),
+                              vertical: (31 - 14) / 2 + 12),
                           suffixIcon: Padding(
                             padding: EdgeInsets.only(bottom: 15),
                             child: Icon(
@@ -195,15 +217,23 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                         ]),
                       ),
                     ),
-                    const SizedBox(height: 50),
-                    ButtonPrimary(
-                        isEnable: true,
-                        text: 'Simpan Perubahan',
-                        onPressed: () {}),
                   ],
                 ),
               )
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 40),
+        child: BottomAppBar(
+          child: ButtonPrimary(
+            isEnable: _isTerisi,
+            text: 'Simpan Perubahan',
+            onPressed: () {
+              // Navigator.pushNamedAndRemoveUntil(
+              //     context, '/app/add/success', (route) => false);
+            },
           ),
         ),
       ),
