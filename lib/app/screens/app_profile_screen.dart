@@ -19,7 +19,11 @@ class _ProfilePageState extends State<ProfilePage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            const AppBarNormal(text: 'Profile', subtext: ''),
+            const AppBarNormal(
+              text: 'Profile',
+              subtext: '',
+              routeBack: '/app',
+            ),
             Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(

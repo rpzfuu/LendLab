@@ -70,8 +70,10 @@ class _AddBarangPageState extends State<AddBarangPage> {
           child: Column(
             children: [
               const AppBarNormal(
-                  text: 'Tambahkan Peminjaman',
-                  subtext: 'Isi detail peminjaman'),
+                text: 'Tambahkan Peminjaman',
+                subtext: 'Isi detail peminjaman',
+                routeBack: '/app/add',
+              ),
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(

@@ -23,8 +23,10 @@ class _AddPageState extends State<AddPage> {
           child: Column(
             children: [
               const AppBarNormal(
-                  text: 'Pilih Jenis Peminjaman',
-                  subtext: 'Pilih jenis peminjaman yang sesuai'),
+                text: 'Pilih Jenis Peminjaman',
+                subtext: 'Pilih jenis peminjaman yang sesuai',
+                routeBack: '/app',
+              ),
               Padding(
                 padding: const EdgeInsets.all(40),
                 child: Column(

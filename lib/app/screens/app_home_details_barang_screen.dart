@@ -5,14 +5,15 @@ import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
-class HomeListDetailPage extends StatefulWidget {
-  const HomeListDetailPage({super.key});
+class HomeDetailsBarangPage extends StatefulWidget {
+  final Map<String, dynamic> dataPinjaman;
+  const HomeDetailsBarangPage({super.key, required this.dataPinjaman});
 
   @override
-  State<HomeListDetailPage> createState() => _HomeListDetailPageState();
+  State<HomeDetailsBarangPage> createState() => _HomeDetailsBarangPageState();
 }
 
-class _HomeListDetailPageState extends State<HomeListDetailPage> {
+class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
   final _namaController = TextEditingController();
   final _jumlahController = TextEditingController();
   bool _isTerisi = false;
@@ -54,6 +55,12 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> dataPinjaman = widget.dataPinjaman;
+    setState(() {
+      _namaController.text = dataPinjaman['nama'];
+      _dateController.text = dataPinjaman['tanggal'];
+      _jumlahController.text = dataPinjaman['barang'];
+    });
     double mWidth = MediaQuery.of(context).size.width;
     double mHeight = MediaQuery.of(context).size.height;
     Widget bottomWidget() {
@@ -95,13 +102,16 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
           child: Column(
             children: [
               const AppBarNormal(
-                  text: 'Detail Peminjaman', subtext: 'Detail data peminjaman'),
+                text: 'Detail Peminjaman',
+                subtext: 'Detail data peminjaman',
+                routeBack: '/app/home/details',
+              ),
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
                     const Image(
-                      image: AssetImage('lib/assets/images/add_uang.png'),
+                      image: AssetImage('lib/assets/images/add_barang.png'),
                     ),
                     const SizedBox(height: 25),
                     const Align(
@@ -177,10 +187,6 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
                         controller: _jumlahController,
                         style: TextStyles.mReguler,
                         decoration: const InputDecoration(
-                          prefixIcon: Text(
-                            'Rp',
-                            style: TextStyles.mReguler,
-                          ),
                           contentPadding: EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 12),
                           suffixIcon: Padding(
@@ -230,10 +236,7 @@ class _HomeListDetailPageState extends State<HomeListDetailPage> {
           child: ButtonPrimary(
             isEnable: _isTerisi,
             text: 'Simpan Perubahan',
-            onPressed: () {
-              // Navigator.pushNamedAndRemoveUntil(
-              //     context, '/app/add/success', (route) => false);
-            },
+            onPressed: () {},
           ),
         ),
       ),

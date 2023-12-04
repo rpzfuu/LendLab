@@ -5,7 +5,13 @@ import 'package:lend_lab/theme/app_text_styles.dart';
 class AppBarNormal extends StatelessWidget {
   final String text;
   final String subtext;
-  const AppBarNormal({super.key, required this.text, required this.subtext});
+  final String routeBack;
+
+  const AppBarNormal(
+      {super.key,
+      required this.text,
+      required this.subtext,
+      required this.routeBack});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +27,9 @@ class AppBarNormal extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
                     child: IconButton(
-                      onPressed: ModalRoute.of(context)?.settings.name != '/app'
-                          ? () {
-                              Navigator.pop(context);
-                            }
-                          : () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/app', (route) => false);
-                            },
+                      onPressed: () {
+                        Navigator.popAndPushNamed(context, routeBack);
+                      },
                       icon: const Icon(
                         Icons.arrow_back_ios_new,
                         color: black,

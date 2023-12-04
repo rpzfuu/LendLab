@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextButton.styleFrom(
                               alignment: Alignment.centerRight),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/app/home/list');
+                            Navigator.pushNamed(context, '/app/home/details');
                           },
                           child: const Text(
                             'Details',
