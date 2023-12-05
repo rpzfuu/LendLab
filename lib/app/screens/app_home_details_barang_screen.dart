@@ -32,6 +32,11 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
     _namaController.addListener(isTerisi);
     _jumlahController.addListener(isTerisi);
     _dateController.addListener(isTerisi);
+
+    Map<String, dynamic> dataPinjaman = widget.dataPinjaman;
+    _namaController.text = dataPinjaman['nama'];
+    _dateController.text = dataPinjaman['tanggal'];
+    _jumlahController.text = dataPinjaman['barang'];
   }
 
   final _dateController = TextEditingController();
@@ -55,12 +60,6 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> dataPinjaman = widget.dataPinjaman;
-    setState(() {
-      _namaController.text = dataPinjaman['nama'];
-      _dateController.text = dataPinjaman['tanggal'];
-      _jumlahController.text = dataPinjaman['barang'];
-    });
     double mWidth = MediaQuery.of(context).size.width;
     double mHeight = MediaQuery.of(context).size.height;
     Widget bottomWidget() {

@@ -59,26 +59,27 @@ class CardHistory extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          nama,
-                          style:
-                              TextStyles.sMedium.copyWith(color: Colors.black),
-                        ),
-                        Text(
-                          jenis == 'uang' ? 'Rp $jumlah' : jumlah,
-                          style:
-                              TextStyles.sMedium.copyWith(color: Colors.black),
-                        ),
-                      ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            nama,
+                            style: TextStyles.sMedium
+                                .copyWith(color: Colors.black),
+                          ),
+                          Text(
+                            jenis == 'uang' ? 'Rp $jumlah' : jumlah,
+                            style: TextStyles.sMedium
+                                .copyWith(color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Expanded(
-                      child: Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
@@ -93,7 +94,7 @@ class CardHistory extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ))
+                  )
                 ],
               ),
               const SizedBox(height: 15),

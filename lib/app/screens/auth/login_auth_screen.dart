@@ -11,6 +11,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  bool terisi = false;
+  void isTerisi() {
+    bool temp =
+        _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+    setState(() {
+      terisi = temp;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(isTerisi);
+    _passwordController.addListener(isTerisi);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +78,12 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 40,
                       child: TextFormField(
+                        controller: _emailController,
                         style: TextStyles.sReguler,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              vertical: (40 - 12) / 2, horizontal: 16),
+                              vertical: 0, horizontal: 16),
                           hintText: 'Enter Your Email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -80,12 +100,13 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 40,
                       child: TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         style: TextStyles.sReguler,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              vertical: (40 - 12) / 2, horizontal: 16),
+                              vertical: 0, horizontal: 16),
                           hintText: 'Enter Password Here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -95,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 25),
                     ButtonPrimary(
-                        isEnable: true,
+                        isEnable: terisi,
                         text: 'Login',
                         onPressed: () {
                           Navigator.pushNamed(context, '/app');

@@ -87,6 +87,7 @@ class _HomeDetailsPageState extends State<HomeDetailsPage> {
                             const SizedBox(height: 20),
                             ListView(
                               shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
                               children: List.generate(
                                 dataListUang.length,
                                 (index) => Column(
@@ -95,7 +96,7 @@ class _HomeDetailsPageState extends State<HomeDetailsPage> {
                                       nama: dataListUang[index]['nama'],
                                       tanggal: dataListUang[index]['tanggal'],
                                       jumlah: dataListUang[index]['jumlah'],
-                                      dataPinjaman: dataListBarang[index],
+                                      dataPinjaman: dataListUang[index],
                                     ),
                                     const SizedBox(height: 15),
                                     index + 1 != dataListUang.length
@@ -133,6 +134,7 @@ class _HomeDetailsPageState extends State<HomeDetailsPage> {
                               const SizedBox(height: 20),
                               ListView(
                                 shrinkWrap: true,
+                                physics: const ClampingScrollPhysics(),
                                 children: List.generate(
                                   dataListBarang.length,
                                   (index) => Column(

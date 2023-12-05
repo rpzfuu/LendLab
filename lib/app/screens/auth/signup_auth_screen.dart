@@ -16,6 +16,25 @@ class _SignupPageState extends State<SignupPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool terisi = false;
+  void isTerisi() {
+    bool temp = _firstnameController.text.isNotEmpty &&
+        _lastnameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty;
+
+    setState(() {
+      terisi = temp;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _firstnameController.addListener(isTerisi);
+    _lastnameController.addListener(isTerisi);
+    _emailController.addListener(isTerisi);
+    _passwordController.addListener(isTerisi);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +93,7 @@ class _SignupPageState extends State<SignupPage> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
-                                    vertical: (40 - 12) / 2, horizontal: 16),
+                                    vertical: 0, horizontal: 16),
                                 hintText: 'First Name',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -94,7 +113,7 @@ class _SignupPageState extends State<SignupPage> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
-                                    vertical: (40 - 12) / 2, horizontal: 16),
+                                    vertical: 0, horizontal: 16),
                                 hintText: 'Last Name',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -119,7 +138,7 @@ class _SignupPageState extends State<SignupPage> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              vertical: (40 - 12) / 2, horizontal: 16),
+                              vertical: 0, horizontal: 16),
                           hintText: 'Enter Your Email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -142,7 +161,7 @@ class _SignupPageState extends State<SignupPage> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              vertical: (40 - 12) / 2, horizontal: 16),
+                              vertical: 0, horizontal: 16),
                           hintText: 'Enter Password Here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -152,7 +171,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 25),
                     ButtonPrimary(
-                        isEnable: true,
+                        isEnable: terisi,
                         text: 'Create Account',
                         onPressed: () {
                           Navigator.pushNamed(context, '/app');

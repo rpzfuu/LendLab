@@ -134,6 +134,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             ListView(
                               shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
                               children: List.generate(
                                 filteredDataListUang.length,
                                 (index) => ListHomeUang(
@@ -170,6 +171,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             ListView(
                               shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
                               children: List.generate(
                                 filteredDataListBarang.length,
                                 (index) => ListHomeBarang(

@@ -163,23 +163,15 @@ class ListHomeDetailUang extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 47,
-                      width: 52,
-                      child: Image(
-                        image: AssetImage('lib/assets/images/uang.png'),
-                      ),
-                    ),
-                  ],
+              const SizedBox(
+                height: 47,
+                width: 52,
+                child: Image(
+                  image: AssetImage('lib/assets/images/uang.png'),
                 ),
               ),
+              const SizedBox(width: 10),
               Expanded(
-                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -196,7 +188,6 @@ class ListHomeDetailUang extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -258,23 +249,15 @@ class ListHomeDetailBarang extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 47,
-                      width: 52,
-                      child: Image(
-                        image: AssetImage('lib/assets/images/barang.png'),
-                      ),
-                    ),
-                  ],
+              const SizedBox(
+                height: 47,
+                width: 52,
+                child: Image(
+                  image: AssetImage('lib/assets/images/barang.png'),
                 ),
               ),
+              const SizedBox(width: 10),
               Expanded(
-                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -291,7 +274,6 @@ class ListHomeDetailBarang extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [

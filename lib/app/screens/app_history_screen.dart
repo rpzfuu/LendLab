@@ -88,6 +88,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     ),
                     ListView(
                       shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
                       children: List.generate(
                         filteredDataListHistory.length,
                         (index) => CardHistory(
