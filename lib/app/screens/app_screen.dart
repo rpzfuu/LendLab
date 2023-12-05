@@ -6,6 +6,7 @@ import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/app_profile_screen.dart';
 
 import 'package:lend_lab/theme/app_colors.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -38,21 +39,21 @@ class _AppPageState extends State<AppPage> {
           backgroundColor: white,
           selectedItemColor: mainColor,
           unselectedItemColor: subtleBlue,
-          items: const [
-            BottomNavigationBarItem(
+          items: [
+            const BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.edit_document),
+              icon: Icon(MdiIcons.pencilPlus),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.document_scanner_rounded),
+              icon: Icon(MdiIcons.textBox),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(MdiIcons.account),
               label: '',
             ),
           ],
