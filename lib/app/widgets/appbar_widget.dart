@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AppBarNormal extends StatelessWidget {
   final String text;
@@ -30,8 +31,9 @@ class AppBarNormal extends StatelessWidget {
                       onPressed: () {
                         Navigator.popAndPushNamed(context, routeBack);
                       },
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new,
+                      icon: Icon(
+                        MdiIcons.chevronLeft,
+                        size: 36,
                         color: black,
                       ),
                     ),
@@ -118,7 +120,7 @@ class AppBarWelcome extends StatelessWidget {
                 hintStyle: TextStyles.mReguler.copyWith(color: grey2),
                 hintText: 'Cari sesuatu',
                 contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: Icon(MdiIcons.magnify),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -158,9 +160,10 @@ class AppBarHistory extends StatelessWidget {
                             Navigator.pushNamedAndRemoveUntil(
                                 context, '/app', (route) => false);
                           },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
-                      color: mainColor,
+                    icon: Icon(
+                      MdiIcons.chevronLeft,
+                      color: black,
+                      size: 36,
                     ),
                   ),
                 ),
@@ -174,14 +177,15 @@ class AppBarHistory extends StatelessWidget {
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
                       onPressed: null,
                       icon: Icon(
-                        Icons.tune,
-                        color: mainColor,
+                        MdiIcons.tuneVariant,
+                        color: black,
+                        size: 28,
                       )),
                 ),
               ),
@@ -199,7 +203,7 @@ class AppBarHistory extends StatelessWidget {
                   hintStyle: TextStyles.mReguler.copyWith(color: grey2),
                   hintText: 'Cari peminjaman',
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                  prefixIcon: const Icon(Icons.search),
+                  prefixIcon: Icon(MdiIcons.magnify),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
