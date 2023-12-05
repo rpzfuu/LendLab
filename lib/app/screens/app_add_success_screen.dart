@@ -24,8 +24,7 @@ class _AddSuccessPageState extends State<AddSuccessPage> {
               child: SizedBox(
                 height: 278,
                 width: 278,
-                child: Image(
-                    image: AssetImage('lib/assets/images/splash_screen.png')),
+                child: Image(image: AssetImage('lib/assets/images/sukses.png')),
               ),
             ),
             Padding(
