@@ -4,6 +4,7 @@ import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AddBarangPage extends StatefulWidget {
   const AddBarangPage({super.key});
@@ -115,8 +116,8 @@ class _AddBarangPageState extends State<AddBarangPage> {
                               borderRadius: BorderRadius.circular(8)),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: (42 - 14) / 2, horizontal: 10),
-                          suffixIcon: const Icon(
-                            Icons.date_range,
+                          suffixIcon: Icon(
+                            MdiIcons.calendarMonth,
                             color: mainColor,
                           ),
                         ),
