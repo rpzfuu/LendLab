@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -82,12 +83,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyles.mMedium.copyWith(color: black),
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 20,
+                                MdiIcons.chevronRight,
+                                size: 30,
                                 color: black,
                               ),
                             ),
