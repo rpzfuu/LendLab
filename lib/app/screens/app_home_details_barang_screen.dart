@@ -4,6 +4,7 @@ import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeDetailsBarangPage extends StatefulWidget {
   final Map<String, dynamic> dataPinjaman;
@@ -126,13 +127,13 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                       child: TextFormField(
                         controller: _namaController,
                         style: TextStyles.mReguler,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 15),
                           suffixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(bottom: 15),
                             child: Icon(
-                              Icons.edit,
+                              MdiIcons.pencil,
                               color: mainColor,
                               size: 18,
                             ),
@@ -164,8 +165,8 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                               borderRadius: BorderRadius.circular(8)),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: (42 - 14) / 2, horizontal: 10),
-                          suffixIcon: const Icon(
-                            Icons.date_range,
+                          suffixIcon: Icon(
+                            MdiIcons.calendarEdit,
                             color: mainColor,
                           ),
                         ),
@@ -185,13 +186,13 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                       child: TextFormField(
                         controller: _jumlahController,
                         style: TextStyles.mReguler,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 12),
                           suffixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(bottom: 15),
                             child: Icon(
-                              Icons.edit,
+                              MdiIcons.pencil,
                               color: mainColor,
                               size: 18,
                             ),
