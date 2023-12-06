@@ -28,6 +28,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: false,
         colorScheme: ColorScheme.fromSwatch().copyWith(primary: mainColor),
       ),
       initialRoute: '/splash',
