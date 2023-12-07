@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
@@ -171,11 +172,30 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 25),
                     ButtonPrimary(
-                        isEnable: terisi,
-                        text: 'Create Account',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/app');
-                        }),
+                      isEnable: terisi,
+                      text: 'Create Account',
+                      onPressed: () async {
+                        final handler = SupaBaseHandler();
+                        await handler.addUser(
+                          _firstnameController.text.trim(),
+                          _lastnameController.text.trim(),
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                        );
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  'Berhasil Membuat Akun, Silahkan Langsung Login'),
+                              backgroundColor: Colors.green,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/login', (route) => false);
+                        }
+                      },
+                    ),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

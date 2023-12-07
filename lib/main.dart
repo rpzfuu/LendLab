@@ -14,9 +14,17 @@ import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/app/screens/app_screen.dart';
 import 'package:lend_lab/app/screens/splash_screen.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/theme/app_colors.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final handler = SupaBaseHandler();
+  await Supabase.initialize(
+    url: handler.GetURL(),
+    anonKey: handler.GetKey(),
+  );
   runApp(const MainApp());
 }
 

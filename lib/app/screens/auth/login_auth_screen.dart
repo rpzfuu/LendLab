@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
@@ -116,11 +117,36 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 25),
                     ButtonPrimary(
-                        isEnable: terisi,
-                        text: 'Login',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/app');
-                        }),
+                      isEnable: terisi,
+                      text: 'Login',
+                      onPressed: () async {
+                        final handler = SupaBaseHandler();
+                        bool loginSuccessful = await handler.cekLogin(
+                            _emailController.text.trim(),
+                            _passwordController.text.trim());
+                        if (mounted) {
+                          if (loginSuccessful) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Login Sukses!'),
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/app', (route) => false);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Login Gagal'),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
