@@ -5,6 +5,7 @@ import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter/services.dart';
 
 class HomeDetailsBarangPage extends StatefulWidget {
   final Map<String, dynamic> dataPinjaman;
@@ -131,7 +132,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 15),
                           suffixIcon: Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
+                            padding: EdgeInsets.only(bottom: 15),
                             child: Icon(
                               MdiIcons.pencil,
                               color: mainColor,
@@ -139,6 +140,17 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                             ),
                           ),
                         ),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                        ],
+                        //validator: (value) {
+                        // if (value == null || value.isEmpty) {
+                        //  return 'Harap masukkan nama';
+                        // } else if (value.contains(new RegExp(r'[0-9]'))) {
+                        //  return 'Harap masukkan karakter huruf saja';
+                        //  }
+                        //  return null;
+                        //  },
                       ),
                     ),
                     const SizedBox(height: 25),
@@ -176,7 +188,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Jumlah Peminjaman',
+                        'Nama Barang',
                         style: TextStyles.lSemiBold,
                       ),
                     ),
