@@ -90,7 +90,7 @@ class AppBarWelcome extends StatelessWidget {
                       style: TextStyles.xlSemiBold,
                     ),
                     Text(
-                      'Welcome!',
+                      'Selamat Datang',
                       style: TextStyles.sReguler.copyWith(color: grey2),
                     ),
                   ],
