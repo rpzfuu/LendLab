@@ -4,6 +4,8 @@ import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:flutter/services.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeDetailsUangPage extends StatefulWidget {
   final Map<String, dynamic> dataPinjaman;
@@ -126,18 +128,21 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                       child: TextFormField(
                         controller: _namaController,
                         style: TextStyles.mReguler,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 15),
                           suffixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(bottom: 15),
                             child: Icon(
-                              Icons.edit,
+                              MdiIcons.pencil,
                               color: mainColor,
                               size: 18,
                             ),
                           ),
                         ),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 25),
@@ -164,8 +169,8 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                               borderRadius: BorderRadius.circular(8)),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: (42 - 14) / 2, horizontal: 10),
-                          suffixIcon: const Icon(
-                            Icons.date_range,
+                          suffixIcon: Icon(
+                            MdiIcons.calendarMonth,
                             color: mainColor,
                           ),
                         ),
@@ -185,22 +190,26 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                       child: TextFormField(
                         controller: _jumlahController,
                         style: TextStyles.mReguler,
-                        decoration: const InputDecoration(
-                          prefixIcon: Text(
+                        decoration: InputDecoration(
+                          prefixIcon: const Text(
                             'Rp',
                             style: TextStyles.mReguler,
                           ),
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 12),
                           suffixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(bottom: 15),
                             child: Icon(
-                              Icons.edit,
+                              MdiIcons.pencil,
                               color: mainColor,
                               size: 18,
                             ),
                           ),
                         ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -215,8 +224,8 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                               });
                         },
                         child: Wrap(children: [
-                          const Icon(
-                            Icons.delete,
+                          Icon(
+                            MdiIcons.delete,
                             color: red,
                           ),
                           Text(

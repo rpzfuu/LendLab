@@ -44,6 +44,20 @@ class SupaBaseHandler {
     }
   }
 
+  Future<Map<String, dynamic>?> getID(String email, String password) async {
+    bool isLogin = await cekLogin(email, password);
+    if (isLogin) {
+      var response = await client
+          .from('User')
+          .select('id_user')
+          .eq('email', email)
+          .eq('password', password)
+          .single();
+      return response;
+    }
+    return null;
+  }
+
   // Future<bool> cekLogin(String email, String password) async {
   //   var response = await client
   //       .from('User')
@@ -58,4 +72,10 @@ class SupaBaseHandler {
   //     return false;
   //   }
   // }
+//mengambil data user
+  Future<Map<String, dynamic>> dataUser(int id) async {
+    var response =
+        await client.from('User').select().eq('id_user', id).single();
+    return response;
+  }
 }
