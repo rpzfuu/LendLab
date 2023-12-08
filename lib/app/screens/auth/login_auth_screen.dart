@@ -121,11 +121,12 @@ class _LoginPageState extends State<LoginPage> {
                       text: 'Login',
                       onPressed: () async {
                         final handler = SupaBaseHandler();
-                        bool loginSuccessful = await handler.cekLogin(
+                        final idUser = await handler.getID(
                             _emailController.text.trim(),
                             _passwordController.text.trim());
                         if (mounted) {
-                          if (loginSuccessful) {
+                          // ignore: unnecessary_null_comparison
+                          if (idUser != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Login Sukses!'),
@@ -134,7 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                             Navigator.pushNamedAndRemoveUntil(
-                                context, '/app', (route) => false);
+                                context, '/app', (route) => false,
+                                arguments: idUser['id_user']);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

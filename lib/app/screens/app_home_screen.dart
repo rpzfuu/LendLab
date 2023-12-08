@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/list_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int idUser;
+  const HomePage({super.key, required this.idUser});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -57,6 +59,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final supabase = SupaBaseHandler();
+    int idUser = widget.idUser;
+    final dataUser = supabase.dataUser(idUser);
+
     List<Map<String, dynamic>> filteredDataListUang =
         dataListUang.where((item) {
       return item['nama'].toLowerCase().contains(searchQuery.toLowerCase()) ||
@@ -75,12 +81,24 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            AppBarWelcome(
-              nama: 'Felicia',
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                });
+            FutureBuilder(
+              future: dataUser,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final data = snapshot.data!;
+                String namaUser = data['first_name'] + ' ' + data['last_name'];
+                return AppBarWelcome(
+                  nama: namaUser,
+                  onChanged: (value) {
+                    setState(() {
+                      searchQuery = value;
+                    });
+                  },
+                );
               },
             ),
             Padding(

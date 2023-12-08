@@ -9,16 +9,24 @@ import 'package:lend_lab/theme/app_colors.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AppPage extends StatefulWidget {
-  const AppPage({super.key});
+  final int idUser;
+  const AppPage({super.key, required this.idUser});
 
   @override
   State<AppPage> createState() => _AppPageState();
 }
 
 class _AppPageState extends State<AppPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
+    int idUser = widget.idUser;
+
     return Scaffold(
       bottomNavigationBar: SizedBox(
         height: 85,
@@ -61,11 +69,11 @@ class _AppPageState extends State<AppPage> {
       ),
       body: IndexedStack(
         index: currentPageIndex,
-        children: const [
-          HomePage(),
-          AddPage(),
-          HistoryPage(),
-          ProfilePage(),
+        children: [
+          HomePage(idUser: idUser),
+          const AddPage(),
+          const HistoryPage(),
+          const ProfilePage(),
         ],
       ),
     );
