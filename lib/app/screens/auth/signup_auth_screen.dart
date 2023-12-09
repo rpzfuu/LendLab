@@ -55,7 +55,7 @@ class _SignupPageState extends State<SignupPage> {
                       style: TextStyles.xlSemiBold,
                     ),
                     Text(
-                      'Create account to continue your journey',
+                      'Buat Akunmu Untuk Memulai Pencatatan',
                       style: TextStyles.sReguler.copyWith(color: grey2),
                     )
                   ],
@@ -78,7 +78,7 @@ class _SignupPageState extends State<SignupPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Full Name',
+                      'Nama Lengkap',
                       style: TextStyles.sSemiBold,
                     ),
                     const SizedBox(height: 8),
@@ -95,7 +95,7 @@ class _SignupPageState extends State<SignupPage> {
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 16),
-                                hintText: 'First Name',
+                                hintText: 'Nama Depan',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -115,7 +115,7 @@ class _SignupPageState extends State<SignupPage> {
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 16),
-                                hintText: 'Last Name',
+                                hintText: 'Nama Belakang',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -140,7 +140,7 @@ class _SignupPageState extends State<SignupPage> {
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 0, horizontal: 16),
-                          hintText: 'Enter Your Email',
+                          hintText: 'Masukkan Email-mu',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -149,7 +149,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      'Password',
+                      'Kata Sandi',
                       style: TextStyles.sSemiBold,
                     ),
                     const SizedBox(height: 8),
@@ -163,7 +163,7 @@ class _SignupPageState extends State<SignupPage> {
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 0, horizontal: 16),
-                          hintText: 'Enter Password Here',
+                          hintText: 'Masukkan Kata Sandi Disini',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -173,7 +173,7 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(height: 25),
                     ButtonPrimary(
                       isEnable: terisi,
-                      text: 'Create Account',
+                      text: 'Buat Akun',
                       onPressed: () async {
                         final handler = SupaBaseHandler();
                         await handler.addUser(
@@ -201,7 +201,7 @@ class _SignupPageState extends State<SignupPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Already have account?',
+                          'Sudah Punya Akun?',
                           style: TextStyles.sMedium.copyWith(color: grey2),
                         ),
                         TextButton(
@@ -209,7 +209,7 @@ class _SignupPageState extends State<SignupPage> {
                               Navigator.pushNamed(context, '/login');
                             },
                             child: Text(
-                              'Sign In',
+                              'Masuk',
                               style:
                                   TextStyles.sMedium.copyWith(color: mainColor),
                             ))
