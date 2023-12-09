@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyles.xlSemiBold,
                     ),
                     Text(
-                      'Login to continue your journey',
+                      'Ayo masuk dan lanjutkan pencatatanmu',
                       style: TextStyles.sReguler.copyWith(color: grey2),
                     )
                   ],
