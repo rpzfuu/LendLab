@@ -30,8 +30,8 @@ class _AppPageState extends State<AppPage> {
       bottomNavigationBar: SizedBox(
         height: 85,
         child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           currentIndex: currentPageIndex,
           onTap: (int index) {
             switch (index) {
@@ -49,19 +49,19 @@ class _AppPageState extends State<AppPage> {
           items: [
             const BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded),
-              label: '',
+              label: 'Beranda',
             ),
             BottomNavigationBarItem(
               icon: Icon(MdiIcons.pencilPlus),
-              label: '',
+              label: 'Tambah',
             ),
             BottomNavigationBarItem(
               icon: Icon(MdiIcons.textBox),
-              label: '',
+              label: 'Riwayat',
             ),
             BottomNavigationBarItem(
               icon: Icon(MdiIcons.account),
-              label: '',
+              label: 'Profil',
             ),
           ],
         ),

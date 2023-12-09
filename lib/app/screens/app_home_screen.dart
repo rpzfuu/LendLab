@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.pushNamed(context, '/app/home/details');
                           },
                           child: const Text(
-                            'Details',
+                            'Detail',
                             style: TextStyles.sMedium,
                           ),
                         ),

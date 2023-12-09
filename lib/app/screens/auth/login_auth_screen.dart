@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _loginfield = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyles.xlSemiBold,
                     ),
                     Text(
-                      'Login to continue your journey',
+                      'Ayo masuk dan lanjutkan pencatatanmu',
                       style: TextStyles.sReguler.copyWith(color: grey2),
                     )
                   ],
@@ -68,108 +69,134 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 35),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Email',
-                      style: TextStyles.sSemiBold,
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        controller: _emailController,
-                        style: TextStyles.sReguler,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 16),
-                          hintText: 'Enter Your Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                child: Form(
+                  key: _loginfield,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Email',
+                        style: TextStyles.sSemiBold,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _emailController,
+                          style: TextStyles.sReguler,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            hintText: 'Masukkan Email',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Masukkan";
+                            }
+                            bool emailValid = RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value);
+                            if (!emailValid) {
+                              return "Masukkan Email Yang Valid";
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Password',
-                      style: TextStyles.sSemiBold,
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        style: TextStyles.sReguler,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 16),
-                          hintText: 'Enter Password Here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Kata Sandi',
+                        style: TextStyles.sSemiBold,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          style: TextStyles.sReguler,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            hintText: 'Masukkan Kata sandi',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Masukkan Kata Sandi";
+                            }
+                            if (value.length < 6) {
+                              return "Kata Sandi harus lebih dari 6 karakter";
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 25),
-                    ButtonPrimary(
-                      isEnable: terisi,
-                      text: 'Login',
-                      onPressed: () async {
-                        final handler = SupaBaseHandler();
-                        final idUser = await handler.getID(
-                            _emailController.text.trim(),
-                            _passwordController.text.trim());
-                        if (mounted) {
-                          // ignore: unnecessary_null_comparison
-                          if (idUser != null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Login Sukses!'),
-                                backgroundColor: Colors.green,
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, '/app', (route) => false,
-                                arguments: idUser['id_user']);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Login Gagal'),
-                                backgroundColor: Colors.red,
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
+                      const SizedBox(height: 25),
+                      ButtonPrimary(
+                        isEnable: terisi,
+                        text: 'Masuk',
+                        onPressed: () async {
+                          if (_loginfield.currentState!.validate()) {
+                            final handler = SupaBaseHandler();
+                            final idUser = await handler.getID(
+                                _emailController.text.trim(),
+                                _passwordController.text.trim());
+                            if (mounted) {
+                              // ignore: unnecessary_null_comparison
+                              if (idUser != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Masuk Sukses!'),
+                                    backgroundColor: Colors.green,
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/app', (route) => false,
+                                    arguments: idUser['id_user']);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Masuk Gagal'),
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            }
                           }
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Don`t have account?',
-                          style: TextStyles.sMedium.copyWith(color: grey2),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/signup');
-                            },
-                            child: Text(
-                              'Sign Up',
-                              style:
-                                  TextStyles.sMedium.copyWith(color: mainColor),
-                            ))
-                      ],
-                    ),
-                    const SizedBox(height: 50),
-                  ],
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Tidak Punya Akun?',
+                            style: TextStyles.sMedium.copyWith(color: grey2),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/signup');
+                              },
+                              child: Text(
+                                'Daftar',
+                                style: TextStyles.sMedium
+                                    .copyWith(color: mainColor),
+                              ))
+                        ],
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
                 ),
               )
             ],
