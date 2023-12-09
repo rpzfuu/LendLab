@@ -5,8 +5,7 @@ import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 
 class AddPage extends StatefulWidget {
-  final int idUser;
-  const AddPage({super.key, required this.idUser});
+  const AddPage({super.key});
 
   @override
   State<AddPage> createState() => _AddPageState();

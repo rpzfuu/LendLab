@@ -4,6 +4,7 @@ import 'package:lend_lab/app/screens/app_history_screen.dart';
 
 import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/app_profile_screen.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -17,7 +18,14 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  final supabase = SupaBaseHandler();
   int idUser = Get.find<UserController>().idUser.value;
+  late Map<String, dynamic> dataUser;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {

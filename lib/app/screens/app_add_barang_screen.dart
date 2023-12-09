@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:lend_lab/app/services/getx_controller_service.dart';
 
 class AddBarangPage extends StatefulWidget {
   const AddBarangPage({super.key});
@@ -15,6 +18,8 @@ class AddBarangPage extends StatefulWidget {
 }
 
 class _AddBarangPageState extends State<AddBarangPage> {
+  int idUser = Get.find<UserController>().idUser.value;
+  late DateTime simpanTanggal;
   final _namaPeminjamController = TextEditingController();
   final _namaNilaiController = TextEditingController();
   final _dateController = TextEditingController();
@@ -46,6 +51,7 @@ class _AddBarangPageState extends State<AddBarangPage> {
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
+        simpanTanggal = picked;
         _selectedDate = picked;
         final formattedDate = DateFormat('dd/MMM/yy').format(_selectedDate);
         _dateController.text = formattedDate;
@@ -308,9 +314,18 @@ class _AddBarangPageState extends State<AddBarangPage> {
           child: ButtonPrimary(
             isEnable: terisi,
             text: 'Lanjutkan',
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/app/add/success', (route) => false);
+            onPressed: () async {
+              final supabase = SupaBaseHandler();
+              supabase.addPinjaman(
+                  idUser,
+                  _namaPeminjamController.text.trim(),
+                  _namaNilaiController.text.trim(),
+                  simpanTanggal.toIso8601String(),
+                  'barang');
+              if (mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/app/add/success', (route) => false);
+              }
             },
           ),
         ),

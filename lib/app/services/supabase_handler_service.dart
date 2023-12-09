@@ -20,12 +20,14 @@ class SupaBaseHandler {
   //signup
   addUser(String first_name, String last_name, String email,
       String password) async {
-    var response = await client.from('User').insert({
-      'first_name': first_name,
-      'last_name': last_name,
-      'email': email,
-      'password': password
-    });
+    var response = await client.from('User').insert(
+      {
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'password': password
+      },
+    );
   }
   //login
 
@@ -70,5 +72,19 @@ class SupaBaseHandler {
         await client.from('Pinjaman').select().eq('id_user', id).execute();
 
     return List<Map<String, dynamic>>.from(response.data);
+  }
+
+  //tambahkan pinjaman
+  addPinjaman(int idUser, String namaPeminjam, String nilai,
+      String tanggalMeminjam, String kategori) async {
+    var response = await client.from('Pinjaman').insert(
+      {
+        'id_user': idUser,
+        'nama_peminjam': namaPeminjam,
+        'nilai': nilai,
+        'tanggal_meminjam': tanggalMeminjam,
+        'kategori': kategori,
+      },
+    );
   }
 }

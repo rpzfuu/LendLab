@@ -17,9 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int idUser = Get.find<UserController>().idUser.value;
+  Map<String, dynamic> dataUser = Get.find<UserController>().user;
   final supabase = SupaBaseHandler();
 
   late Future<List<Map<String, dynamic>>> dataPinjaman;
+
   @override
   void initState() {
     super.initState();
@@ -28,55 +30,20 @@ class _HomePageState extends State<HomePage> {
 
   String searchQuery = '';
 
-  List<Map<String, dynamic>> dataListBarang = [
-    {
-      'id': 1,
-      'nama': 'Mas Amba',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'barang': 'Handuk Mas Fuad'
-    },
-    {
-      'id': 2,
-      'nama': 'Mas Rusdi',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'barang': 'Baju Si Imut'
-    },
-    {
-      'id': 3,
-      'nama': 'Pak Asep',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'barang': 'Celana Mas Mursyid'
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final dataUser = supabase.dataUser(idUser);
-
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
           children: [
-            FutureBuilder(
-              future: dataUser,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                final data = snapshot.data!;
-                String namaUser = data['first_name'] + ' ' + data['last_name'];
-                return AppBarWelcome(
-                  nama: namaUser,
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value;
-                    });
-                  },
-                );
+            AppBarWelcome(
+              nama: dataUser['first_name'] + ' ' + dataUser['last_name'],
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
               },
             ),
             Padding(
@@ -108,137 +75,131 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  FutureBuilder(
+                    future: dataPinjaman,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      final data = snapshot.data!;
+                      List<Map<String, dynamic>> filterDataUang =
+                          data.where((item) {
+                        return item['kategori'] == 'uang' &&
+                            (item['nama_peminjam']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()) ||
+                                item['tanggal_meminjam']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()) ||
+                                item['nilai']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()) ||
+                                item['kategori']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()));
+                      }).toList();
+                      List<Map<String, dynamic>> filterDataBarang =
+                          data.where((item) {
+                        return item['kategori'] == 'barang' &&
+                            (item['nama_peminjam']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()) ||
+                                item['tanggal_meminjam']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()) ||
+                                item['nilai']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()) ||
+                                item['kategori']
+                                    .toLowerCase()
+                                    .contains(searchQuery.toLowerCase()));
+                      }).toList();
+                      return Column(
                         children: [
-                          const Text(
-                            'Uang',
-                            style: TextStyles.mMedium,
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Uang',
+                                    style: TextStyles.mMedium,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Divider(
+                                    height: 1,
+                                    color: grey1,
+                                  ),
+                                  ListView(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    children: List.generate(
+                                        filterDataUang.length,
+                                        (index) => ListHomeUang(
+                                            nama: filterDataUang[index]
+                                                ['nama_peminjam'],
+                                            tanggal: DateFormat('d MMM yyyy')
+                                                .format(DateTime.parse(
+                                                    filterDataUang[index]
+                                                        ['tanggal_meminjam'])),
+                                            jumlah: filterDataUang[index]
+                                                ['nilai'])),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const Divider(
-                            height: 1,
-                            color: grey1,
-                          ),
-                          FutureBuilder(
-                            future: dataPinjaman,
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              final data = snapshot.data!;
-                              List<Map<String, dynamic>> filterData =
-                                  data.where((item) {
-                                return item['kategori'] == 'uang' &&
-                                    (item['nama_peminjam']
-                                            .toLowerCase()
-                                            .contains(
-                                                searchQuery.toLowerCase()) ||
-                                        item['tanggal_meminjam']
-                                            .toLowerCase()
-                                            .contains(
-                                                searchQuery.toLowerCase()) ||
-                                        item['nilai'].toLowerCase().contains(
-                                            searchQuery.toLowerCase()) ||
-                                        item['kategori'].toLowerCase().contains(
-                                            searchQuery.toLowerCase()));
-                              }).toList();
-                              return ListView(
-                                shrinkWrap: true,
-                                physics: const ClampingScrollPhysics(),
-                                children: List.generate(
-                                    filterData.length,
-                                    (index) => ListHomeUang(
-                                        nama: filterData[index]
-                                            ['nama_peminjam'],
-                                        tanggal: DateFormat('d MMM yyyy')
-                                            .format(DateTime.parse(
-                                                filterData[index]
-                                                    ['tanggal_meminjam'])),
-                                        jumlah: filterData[index]['nilai'])),
-                              );
-                            },
+                          const SizedBox(height: 20),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Barang',
+                                    style: TextStyles.mMedium,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Divider(
+                                    height: 1,
+                                    color: grey1,
+                                  ),
+                                  ListView(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    children: List.generate(
+                                        filterDataBarang.length,
+                                        (index) => ListHomeBarang(
+                                            nama: filterDataBarang[index]
+                                                ['nama_peminjam'],
+                                            tanggal: DateFormat('d MMM yyyy')
+                                                .format(DateTime.parse(
+                                                    filterDataBarang[index]
+                                                        ['tanggal_meminjam'])),
+                                            barang: filterDataBarang[index]
+                                                ['nilai'])),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Barang',
-                              style: TextStyles.mMedium,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Divider(
-                              height: 1,
-                              color: grey1,
-                            ),
-                            FutureBuilder(
-                              future: dataPinjaman,
-                              builder: (context, snapshot) {
-                                if (!snapshot.hasData) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                                final data = snapshot.data!;
-                                List<Map<String, dynamic>> filterData =
-                                    data.where((item) {
-                                  return item['kategori'] == 'barang' &&
-                                      (item['nama_peminjam']
-                                              .toLowerCase()
-                                              .contains(
-                                                  searchQuery.toLowerCase()) ||
-                                          item['tanggal_meminjam']
-                                              .toLowerCase()
-                                              .contains(
-                                                  searchQuery.toLowerCase()) ||
-                                          item['nilai'].toLowerCase().contains(
-                                              searchQuery.toLowerCase()) ||
-                                          item['kategori']
-                                              .toLowerCase()
-                                              .contains(
-                                                  searchQuery.toLowerCase()));
-                                }).toList();
-                                return ListView(
-                                  shrinkWrap: true,
-                                  physics: const ClampingScrollPhysics(),
-                                  children: List.generate(
-                                      filterData.length,
-                                      (index) => ListHomeBarang(
-                                          nama: filterData[index]
-                                              ['nama_peminjam'],
-                                          tanggal: DateFormat('d MMM yyyy')
-                                              .format(DateTime.parse(
-                                                  filterData[index]
-                                                      ['tanggal_meminjam'])),
-                                          barang: filterData[index]['nilai'])),
-                                );
-                              },
-                            ),
-                          ]),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),

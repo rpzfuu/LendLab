@@ -148,14 +148,17 @@ class _LoginPageState extends State<LoginPage> {
                         text: 'Masuk',
                         onPressed: () async {
                           if (_loginfield.currentState!.validate()) {
-                            final handler = SupaBaseHandler();
-                            final idUser = await handler.getID(
+                            final supabase = SupaBaseHandler();
+                            final idUser = await supabase.getID(
                                 _emailController.text.trim(),
                                 _passwordController.text.trim());
-                            if (mounted) {
-                              if (idUser != null) {
+                            if (idUser != null) {
+                              Map<String, dynamic> dataUser =
+                                  await supabase.dataUser(idUser['id_user']);
+                              Get.find<UserController>().updateUser(dataUser);
+                              if (mounted) {
                                 Get.find<UserController>()
-                                    .updateUser(idUser['id_user']);
+                                    .updateUserID(idUser['id_user']);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Masuk Sukses!'),
@@ -168,7 +171,9 @@ class _LoginPageState extends State<LoginPage> {
                                     arguments: Get.find<UserController>()
                                         .idUser
                                         .value);
-                              } else {
+                              }
+                            } else {
+                              if (mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Masuk Gagal'),

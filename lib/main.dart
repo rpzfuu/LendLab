@@ -8,6 +8,7 @@ import 'package:lend_lab/app/screens/app_home_details_barang_screen.dart';
 
 import 'package:lend_lab/app/screens/app_home_details_screen.dart';
 import 'package:lend_lab/app/screens/app_home_details_uang_screen.dart';
+import 'package:lend_lab/app/screens/app_home_screen.dart';
 import 'package:lend_lab/app/screens/app_profile_screen.dart';
 import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
@@ -46,13 +47,6 @@ class MainApp extends StatelessWidget {
       initialRoute: '/splash',
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case '/app/add':
-            {
-              final int value = settings.arguments as int;
-              return MaterialPageRoute(
-                builder: (context) => AddPage(idUser: value),
-              );
-            }
           case '/app/home/details/uang':
             {
               final Map<String, dynamic> dataPinjaman =
@@ -81,11 +75,11 @@ class MainApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/app': (context) => const AppPage(),
-        // '/app/home': (context) => const HomePage(),
+        '/app/home': (context) => const HomePage(),
         '/app/home/details': (context) => const HomeDetailsPage(),
         // '/app/home/details/uang': (context) => const HomeDetailsUangPage(),
         // '/app/home/details/barang': (context) => const HomeDetailsBarangPage(),
-        // '/app/add': (context) => const AddPage(),
+        '/app/add': (context) => const AddPage(),
         '/app/add/uang': (context) => const AddUangPage(),
         '/app/add/barang': (context) => const AddBarangPage(),
         '/app/add/success': (context) => const AddSuccessPage(),
