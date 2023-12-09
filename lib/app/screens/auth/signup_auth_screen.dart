@@ -135,7 +135,7 @@ class _SignupPageState extends State<SignupPage> {
                         style: TextStyles.sSemiBold,
                       ),
                       const SizedBox(height: 8),
-                      Container(
+                      SizedBox(
                         height: 60,
                         child: TextFormField(
                           controller: _emailController,
@@ -169,7 +169,7 @@ class _SignupPageState extends State<SignupPage> {
                         style: TextStyles.sSemiBold,
                       ),
                       const SizedBox(height: 8),
-                      Container(
+                      SizedBox(
                         height: 60,
                         child: TextFormField(
                           controller: _passwordController,
