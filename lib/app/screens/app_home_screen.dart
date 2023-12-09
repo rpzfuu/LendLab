@@ -15,27 +15,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final supabase = SupaBaseHandler();
+
+  late Future<List<Map<String, dynamic>>> dataPinjaman;
+  @override
+  void initState() {
+    super.initState();
+    dataPinjaman = supabase.dataPinjamanUser(widget.idUser);
+  }
+
   String searchQuery = '';
-  List<Map<String, dynamic>> dataListUang = [
-    {
-      'id': 1,
-      'nama': 'Yanto "Pasuruan" gempa bumi',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'jumlah': 50000
-    },
-    {
-      'id': 2,
-      'nama': 'Pace Kanaeru',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'jumlah': 20000
-    },
-    {
-      'id': 3,
-      'nama': 'Wak Abdul Sungai Musi',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'jumlah': 100000
-    },
-  ];
+
   List<Map<String, dynamic>> dataListBarang = [
     {
       'id': 1,
@@ -59,22 +49,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final supabase = SupaBaseHandler();
     int idUser = widget.idUser;
     final dataUser = supabase.dataUser(idUser);
 
-    List<Map<String, dynamic>> filteredDataListUang =
-        dataListUang.where((item) {
-      return item['nama'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['tanggal'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['jumlah'].toString().contains(searchQuery);
-    }).toList();
-    List<Map<String, dynamic>> filteredDataListBarang =
-        dataListBarang.where((item) {
-      return item['nama'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['tanggal'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['barang'].toLowerCase().contains(searchQuery.toLowerCase());
-    }).toList();
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
@@ -137,33 +114,62 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(15),
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Uang',
-                              style: TextStyles.mMedium,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Divider(
-                              height: 1,
-                              color: grey1,
-                            ),
-                            ListView(
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              children: List.generate(
-                                filteredDataListUang.length,
-                                (index) => ListHomeUang(
-                                  nama: filteredDataListUang[index]['nama'],
-                                  tanggal: filteredDataListUang[index]
-                                      ['tanggal'],
-                                  jumlah: filteredDataListUang[index]['jumlah'],
-                                ),
-                              ),
-                            ),
-                          ]),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Uang',
+                            style: TextStyles.mMedium,
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          const Divider(
+                            height: 1,
+                            color: grey1,
+                          ),
+                          FutureBuilder(
+                            future: dataPinjaman,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              final data = snapshot.data!;
+                              List<Map<String, dynamic>> filterData =
+                                  data.where((item) {
+                                return item['kategori'] == 'uang' &&
+                                    (item['nama_peminjam']
+                                            .toLowerCase()
+                                            .contains(
+                                                searchQuery.toLowerCase()) ||
+                                        item['tanggal_meminjam']
+                                            .toLowerCase()
+                                            .contains(
+                                                searchQuery.toLowerCase()) ||
+                                        item['nilai'].toLowerCase().contains(
+                                            searchQuery.toLowerCase()) ||
+                                        item['kategori'].toLowerCase().contains(
+                                            searchQuery.toLowerCase()));
+                              }).toList();
+                              return ListView(
+                                shrinkWrap: true,
+                                physics: const ClampingScrollPhysics(),
+                                children: List.generate(
+                                    filterData.length,
+                                    (index) => ListHomeUang(
+                                        nama: filterData[index]
+                                            ['nama_peminjam'],
+                                        tanggal: DateFormat('d MMM yyyy')
+                                            .format(DateTime.parse(
+                                                filterData[index]
+                                                    ['tanggal_meminjam'])),
+                                        jumlah: filterData[index]['nilai'])),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -187,19 +193,48 @@ class _HomePageState extends State<HomePage> {
                               height: 1,
                               color: grey1,
                             ),
-                            ListView(
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              children: List.generate(
-                                filteredDataListBarang.length,
-                                (index) => ListHomeBarang(
-                                  nama: filteredDataListBarang[index]['nama'],
-                                  tanggal: filteredDataListBarang[index]
-                                      ['tanggal'],
-                                  barang: filteredDataListBarang[index]
-                                      ['barang'],
-                                ),
-                              ),
+                            FutureBuilder(
+                              future: dataPinjaman,
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                final data = snapshot.data!;
+                                List<Map<String, dynamic>> filterData =
+                                    data.where((item) {
+                                  return item['kategori'] == 'barang' &&
+                                      (item['nama_peminjam']
+                                              .toLowerCase()
+                                              .contains(
+                                                  searchQuery.toLowerCase()) ||
+                                          item['tanggal_meminjam']
+                                              .toLowerCase()
+                                              .contains(
+                                                  searchQuery.toLowerCase()) ||
+                                          item['nilai'].toLowerCase().contains(
+                                              searchQuery.toLowerCase()) ||
+                                          item['kategori']
+                                              .toLowerCase()
+                                              .contains(
+                                                  searchQuery.toLowerCase()));
+                                }).toList();
+                                return ListView(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  children: List.generate(
+                                      filterData.length,
+                                      (index) => ListHomeBarang(
+                                          nama: filterData[index]
+                                              ['nama_peminjam'],
+                                          tanggal: DateFormat('d MMM yyyy')
+                                              .format(DateTime.parse(
+                                                  filterData[index]
+                                                      ['tanggal_meminjam'])),
+                                          barang: filterData[index]['nilai'])),
+                                );
+                              },
                             ),
                           ]),
                     ),

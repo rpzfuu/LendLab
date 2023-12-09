@@ -3,6 +3,7 @@ import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -176,23 +177,38 @@ class _SignupPageState extends State<SignupPage> {
                       text: 'Create Account',
                       onPressed: () async {
                         final handler = SupaBaseHandler();
-                        await handler.addUser(
-                          _firstnameController.text.trim(),
-                          _lastnameController.text.trim(),
-                          _emailController.text.trim(),
-                          _passwordController.text.trim(),
-                        );
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  'Berhasil Membuat Akun, Silahkan Langsung Login'),
-                              backgroundColor: Colors.green,
-                              duration: Duration(seconds: 2),
-                            ),
+                        try {
+                          await handler.addUser(
+                            _firstnameController.text.trim(),
+                            _lastnameController.text.trim(),
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
                           );
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/login', (route) => false);
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Berhasil Membuat Akun, Silahkan Langsung Login'),
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/login', (route) => false);
+                          }
+                        } catch (e) {
+                          if (e is PostgrestException && e.code == '23505') {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Email sudah digunakan, silakan gunakan email lain.'),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                          }
                         }
                       },
                     ),

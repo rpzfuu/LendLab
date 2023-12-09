@@ -17,6 +17,8 @@ import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'package:get/get.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final handler = SupaBaseHandler();
@@ -24,7 +26,7 @@ Future main() async {
     url: handler.GetURL(),
     anonKey: handler.GetKey(),
   );
-  runApp(const MainApp());
+  runApp(const GetMaterialApp(home: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -45,7 +47,15 @@ class MainApp extends StatelessWidget {
             {
               final int value = settings.arguments as int;
               return MaterialPageRoute(
-                  builder: (context) => AppPage(idUser: value));
+                builder: (context) => AppPage(idUser: value),
+              );
+            }
+          case '/app/add':
+            {
+              final int value = settings.arguments as int;
+              return MaterialPageRoute(
+                builder: (context) => AddPage(idUser: value),
+              );
             }
           case '/app/home/details/uang':
             {
@@ -79,7 +89,7 @@ class MainApp extends StatelessWidget {
         '/app/home/details': (context) => const HomeDetailsPage(),
         // '/app/home/details/uang': (context) => const HomeDetailsUangPage(),
         // '/app/home/details/barang': (context) => const HomeDetailsBarangPage(),
-        '/app/add': (context) => const AddPage(),
+        // '/app/add': (context) => const AddPage(),
         '/app/add/uang': (context) => const AddUangPage(),
         '/app/add/barang': (context) => const AddBarangPage(),
         '/app/add/success': (context) => const AddSuccessPage(),

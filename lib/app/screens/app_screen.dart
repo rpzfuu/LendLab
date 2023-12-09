@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lend_lab/app/screens/app_add_screen.dart';
 import 'package:lend_lab/app/screens/app_history_screen.dart';
 
 import 'package:lend_lab/app/screens/app_home_screen.dart';
@@ -37,7 +36,7 @@ class _AppPageState extends State<AppPage> {
           onTap: (int index) {
             switch (index) {
               case 1:
-                Navigator.pushNamed(context, '/app/add');
+                Navigator.pushNamed(context, '/app/add', arguments: idUser);
               default:
                 setState(() {
                   currentPageIndex = index;
@@ -71,7 +70,7 @@ class _AppPageState extends State<AppPage> {
         index: currentPageIndex,
         children: [
           HomePage(idUser: idUser),
-          const AddPage(),
+          const Placeholder(),
           const HistoryPage(),
           const ProfilePage(),
         ],

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, deprecated_member_use
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -35,7 +35,6 @@ class SupaBaseHandler {
         .select()
         .eq('email', email)
         .eq('password', password)
-        // ignore: deprecated_member_use
         .execute();
     if (response.data != null && response.data.isNotEmpty) {
       return true;
@@ -58,24 +57,18 @@ class SupaBaseHandler {
     return null;
   }
 
-  // Future<bool> cekLogin(String email, String password) async {
-  //   var response = await client
-  //       .from('User')
-  //       .select('email,password')
-  //       .eq('email', email)
-  //       .eq('password', password)
-  //       .single();
-  //   final isUser = response.data as List;
-  //   if (isUser.length == 1) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 //mengambil data user
   Future<Map<String, dynamic>> dataUser(int id) async {
     var response =
         await client.from('User').select().eq('id_user', id).single();
     return response;
+  }
+
+//mengambil data pinjaman
+  Future<List<Map<String, dynamic>>> dataPinjamanUser(int id) async {
+    var response =
+        await client.from('Pinjaman').select().eq('id_user', id).execute();
+
+    return List<Map<String, dynamic>>.from(response.data);
   }
 }

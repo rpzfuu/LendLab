@@ -132,7 +132,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: (31 - 14) / 2 + 15),
                           suffixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(bottom: 15),
                             child: Icon(
                               MdiIcons.pencil,
                               color: mainColor,

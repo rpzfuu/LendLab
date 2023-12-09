@@ -6,7 +6,7 @@ import 'package:lend_lab/theme/app_text_styles.dart';
 class ListHomeUang extends StatelessWidget {
   final String nama;
   final String tanggal;
-  final int jumlah;
+  final String jumlah;
   const ListHomeUang(
       {super.key,
       required this.nama,
