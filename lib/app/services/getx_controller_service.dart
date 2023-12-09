@@ -22,3 +22,9 @@ class UserController extends GetxController {
 //import 'package:lend_lab/app/services/getx_controller_service.dart';
 //import 'package:get/get.dart';
 
+class DataPinjamanController extends GetxController {
+  var dataPinjaman = <Map<String, dynamic>>[].obs;
+  void updatedataPinjaman(List<Map<String, dynamic>> newData) {
+    dataPinjaman.value = newData;
+  }
+}

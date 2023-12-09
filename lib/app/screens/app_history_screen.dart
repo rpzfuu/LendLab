@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/card_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:lend_lab/app/services/getx_controller_service.dart';
+import 'package:get/get.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -13,55 +16,19 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  int idUser = Get.find<UserController>().idUser.value;
+  final supabase = SupaBaseHandler();
+  late Future<List<Map<String, dynamic>>> dataPinjaman;
+
+  @override
+  void initState() {
+    super.initState();
+    dataPinjaman = supabase.dataPinjamanUser(idUser);
+  }
+
   String searchQuery = '';
-  List<Map<String, dynamic>> dataListHistory = [
-    {
-      'id': 1,
-      'nama': 'Yanto "Pasuruan" gempa bumi',
-      'jumlah': '15000',
-      'jenis': 'uang',
-      'peminjaman': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'pengembalian': DateFormat('d MMM yyyy').format(DateTime.now()),
-    },
-    {
-      'id': 2,
-      'nama': 'Fuad 12 nyapu di "Kebun Raya Bogor"',
-      'jumlah': 'Celana Mas Mursyid',
-      'jenis': 'barang',
-      'peminjaman': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'pengembalian': DateFormat('d MMM yyyy').format(DateTime.now()),
-    },
-    {
-      'id': 3,
-      'nama': 'Ryan parmadi dancer Pekalongan',
-      'jumlah': '30000',
-      'jenis': 'uang',
-      'peminjaman': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'pengembalian': DateFormat('d MMM yyyy').format(DateTime.now()),
-    },
-    {
-      'id': 4,
-      'nama': 'Dadang resing jagoan sirkuit Sentul',
-      'jumlah': 'Knalpot Mas Rusdi',
-      'jenis': 'barang',
-      'peminjaman': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'pengembalian': DateFormat('d MMM yyyy').format(DateTime.now()),
-    },
-  ];
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredDataListHistory =
-        dataListHistory.where((item) {
-      return item['nama'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['jumlah'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['jenis'].toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item['peminjaman']
-              .toLowerCase()
-              .contains(searchQuery.toLowerCase()) ||
-          item['pengembalian']
-              .toLowerCase()
-              .contains(searchQuery.toLowerCase());
-    }).toList();
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
@@ -86,21 +53,54 @@ class _HistoryPageState extends State<HistoryPage> {
                       'Peminjaman Terakhir',
                       style: TextStyles.lSemiBold,
                     ),
-                    ListView(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      children: List.generate(
-                        filteredDataListHistory.length,
-                        (index) => CardHistory(
-                          nama: filteredDataListHistory[index]['nama'],
-                          jumlah: filteredDataListHistory[index]['jumlah'],
-                          jenis: filteredDataListHistory[index]['jenis'],
-                          peminjaman: filteredDataListHistory[index]
-                              ['peminjaman'],
-                          pengembalian: filteredDataListHistory[index]
-                              ['pengembalian'],
-                        ),
-                      ),
+                    FutureBuilder(
+                      future: dataPinjaman,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        final data = snapshot.data!;
+                        List<Map<String, dynamic>> dataListHistory =
+                            data.where((item) {
+                          return item['selesai'] == true &&
+                              (item['nama_peminjam']
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase()) ||
+                                  item['nilai']
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase()) ||
+                                  item['kategori']
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase()) ||
+                                  item['tanggal_meminjam']
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase()) ||
+                                  item['tanggal_pengembalian']
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase()));
+                        }).toList();
+
+                        return ListView(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          children: List.generate(
+                            dataListHistory.length,
+                            (index) => CardHistory(
+                              nama: dataListHistory[index]['nama_peminjam'],
+                              jumlah: dataListHistory[index]['nilai'],
+                              jenis: dataListHistory[index]['kategori'],
+                              peminjaman: DateFormat('d MMM yyyy').format(
+                                  DateTime.parse(dataListHistory[index]
+                                      ['tanggal_meminjam'])),
+                              pengembalian: DateFormat('d MMM yyyy').format(
+                                  DateTime.parse(dataListHistory[index]
+                                      ['tanggal_pengembalian'])),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

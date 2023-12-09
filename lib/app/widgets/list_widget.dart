@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
@@ -138,7 +139,7 @@ class ListHomeBarang extends StatelessWidget {
 class ListHomeDetailUang extends StatelessWidget {
   final String nama;
   final String tanggal;
-  final int jumlah;
+  final String jumlah;
   final Map dataPinjaman;
 
   const ListHomeDetailUang(
@@ -150,6 +151,61 @@ class ListHomeDetailUang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double mWidth = MediaQuery.of(context).size.width;
+    double mHeight = MediaQuery.of(context).size.height;
+    Widget bottomWidget() {
+      return Container(
+        color: mainColor,
+        width: mWidth,
+        height: mHeight / 4,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Apakah barangnya sudah dikembalikan?',
+              style: TextStyles.lSemiBold.copyWith(color: white),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'Data pinjamannya akan ditempatkan di halaman riwayat',
+              style: TextStyles.mReguler.copyWith(color: white),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              children: [
+                ButtonBatal(
+                    text: 'Batal',
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                const SizedBox(width: 10),
+                ButtonHapus(
+                  text: 'Selesaikan',
+                  onPressed: () async {
+                    final supabase = SupaBaseHandler();
+                    await supabase
+                        .selesaikanPinjaman(dataPinjaman['id_pinjaman']);
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/app', (route) => false);
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Peminjaman Berhasil Diselesaikan'),
+                        backgroundColor: Colors.green,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     return InkWell(
       onTap: () {
         Navigator.pushNamedAndRemoveUntil(
@@ -211,7 +267,13 @@ class ListHomeDetailUang extends StatelessWidget {
               ),
               ButtonSelesai(
                 text: 'Selesaikan',
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (builder) {
+                        return bottomWidget();
+                      });
+                },
               ),
             ],
           ),
@@ -236,6 +298,59 @@ class ListHomeDetailBarang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double mWidth = MediaQuery.of(context).size.width;
+    double mHeight = MediaQuery.of(context).size.height;
+    Widget bottomWidget() {
+      return Container(
+        color: mainColor,
+        width: mWidth,
+        height: mHeight / 4,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Apakah barangnya sudah dikembalikan?',
+              style: TextStyles.lSemiBold.copyWith(color: white),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'Data pinjamannya akan ditempatkan di halaman riwayat',
+              style: TextStyles.mReguler.copyWith(color: white),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            Wrap(children: [
+              ButtonBatal(
+                  text: 'Batal',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              const SizedBox(width: 10),
+              ButtonHapus(
+                text: 'Selesaikan',
+                onPressed: () async {
+                  final supabase = SupaBaseHandler();
+                  await supabase
+                      .selesaikanPinjaman(dataPinjaman['id_pinjaman']);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/app', (route) => false);
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Peminjaman Berhasil Diselesaikan'),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
+              )
+            ]),
+          ],
+        ),
+      );
+    }
+
     return InkWell(
       onTap: () {
         Navigator.pushNamedAndRemoveUntil(
@@ -297,7 +412,13 @@ class ListHomeDetailBarang extends StatelessWidget {
               ),
               ButtonSelesai(
                 text: 'Selesaikan',
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (builder) {
+                        return bottomWidget();
+                      });
+                },
               ),
             ],
           ),

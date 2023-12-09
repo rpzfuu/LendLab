@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(DataPinjamanController());
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
@@ -84,9 +85,12 @@ class _HomePageState extends State<HomePage> {
                         );
                       }
                       final data = snapshot.data!;
+                      Get.find<DataPinjamanController>()
+                          .updatedataPinjaman(data);
                       List<Map<String, dynamic>> filterDataUang =
                           data.where((item) {
                         return item['kategori'] == 'uang' &&
+                            item['selesai'] == false &&
                             (item['nama_peminjam']
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
@@ -103,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                       List<Map<String, dynamic>> filterDataBarang =
                           data.where((item) {
                         return item['kategori'] == 'barang' &&
+                            item['selesai'] == false &&
                             (item['nama_peminjam']
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||

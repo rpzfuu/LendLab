@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
@@ -36,25 +37,26 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
     _dateController.addListener(isTerisi);
 
     Map<String, dynamic> dataPinjaman = widget.dataPinjaman;
-    _namaController.text = dataPinjaman['nama'];
-    _dateController.text = dataPinjaman['tanggal'];
-    _jumlahController.text = dataPinjaman['jumlah'].toString();
+    _namaController.text = dataPinjaman['nama_peminjam'];
+    _dateController.text = DateFormat('dd/MMM/yy')
+        .format(DateTime.parse(dataPinjaman['tanggal_meminjam']));
+    _jumlahController.text = dataPinjaman['nilai'];
+    selectedDate = DateTime.parse(widget.dataPinjaman['tanggal_meminjam']);
   }
 
   final _dateController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
-
-  void _selectDate(BuildContext context) async {
+  late DateTime selectedDate;
+  void selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != _selectedDate) {
+    if (picked != null && picked != selectedDate) {
       setState(() {
-        _selectedDate = picked;
-        final formattedDate = DateFormat('dd/MMM/yy').format(_selectedDate);
+        selectedDate = picked;
+        final formattedDate = DateFormat('dd/MMM/yy').format(selectedDate);
         _dateController.text = formattedDate;
       });
     }
@@ -89,7 +91,25 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                     Navigator.pop(context);
                   }),
               const SizedBox(width: 10),
-              ButtonHapus(text: 'Hapus', onPressed: () {})
+              ButtonHapus(
+                text: 'Hapus',
+                onPressed: () async {
+                  final supabase = SupaBaseHandler();
+                  await supabase
+                      .selesaikanPinjaman(widget.dataPinjaman['id_pinjaman']);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/app', (route) => false);
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Peminjaman Berhasil Dihapus'),
+                      backgroundColor: Colors.red,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
+              )
             ]),
           ],
         ),
@@ -149,7 +169,7 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Tanggal Pengembalian',
+                        'Tanggal Meminjam',
                         style: TextStyles.lSemiBold,
                       ),
                     ),
@@ -161,7 +181,7 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
                         readOnly: true,
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
-                          _selectDate(context);
+                          selectDate(context);
                         },
                         style: TextStyles.mReguler.copyWith(color: grey3),
                         decoration: InputDecoration(
@@ -248,7 +268,26 @@ class _HomeDetailsUangPageState extends State<HomeDetailsUangPage> {
           child: ButtonPrimary(
             isEnable: _isTerisi,
             text: 'Simpan Perubahan',
-            onPressed: () {},
+            onPressed: () async {
+              final supabase = SupaBaseHandler();
+              await supabase.updatePinjaman(
+                widget.dataPinjaman['id_pinjaman'],
+                _namaController.text.trim(),
+                _jumlahController.text.trim(),
+                selectedDate.toIso8601String(),
+              );
+              // ignore: use_build_context_synchronously
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/app', (route) => false);
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Peminjaman Berhasil Diperbarui'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
           ),
         ),
       ),

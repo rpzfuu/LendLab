@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeDetailsBarangPage extends StatefulWidget {
   final Map<String, dynamic> dataPinjaman;
@@ -36,25 +37,26 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
     _dateController.addListener(isTerisi);
 
     Map<String, dynamic> dataPinjaman = widget.dataPinjaman;
-    _namaController.text = dataPinjaman['nama'];
-    _dateController.text = dataPinjaman['tanggal'];
-    _jumlahController.text = dataPinjaman['barang'];
+    _namaController.text = dataPinjaman['nama_peminjam'];
+    _dateController.text = DateFormat('dd/MMM/yy')
+        .format(DateTime.parse(dataPinjaman['tanggal_meminjam']));
+    _jumlahController.text = dataPinjaman['nilai'];
+    selectedDate = DateTime.parse(widget.dataPinjaman['tanggal_meminjam']);
   }
 
   final _dateController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
-
-  void _selectDate(BuildContext context) async {
+  late DateTime selectedDate;
+  void selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != _selectedDate) {
+    if (picked != null && picked != selectedDate) {
       setState(() {
-        _selectedDate = picked;
-        final formattedDate = DateFormat('dd/MMM/yy').format(_selectedDate);
+        selectedDate = picked;
+        final formattedDate = DateFormat('dd/MMM/yy').format(selectedDate);
         _dateController.text = formattedDate;
       });
     }
@@ -89,7 +91,25 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                     Navigator.pop(context);
                   }),
               const SizedBox(width: 10),
-              ButtonHapus(text: 'Hapus', onPressed: () {})
+              ButtonHapus(
+                text: 'Hapus',
+                onPressed: () async {
+                  final supabase = SupaBaseHandler();
+                  await supabase
+                      .selesaikanPinjaman(widget.dataPinjaman['id_pinjaman']);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/app', (route) => false);
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Peminjaman Berhasil Dihapus'),
+                      backgroundColor: Colors.red,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
+              )
             ]),
           ],
         ),
@@ -143,21 +163,13 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                         ],
-                        //validator: (value) {
-                        // if (value == null || value.isEmpty) {
-                        //  return 'Harap masukkan nama';
-                        // } else if (value.contains(new RegExp(r'[0-9]'))) {
-                        //  return 'Harap masukkan karakter huruf saja';
-                        //  }
-                        //  return null;
-                        //  },
                       ),
                     ),
                     const SizedBox(height: 25),
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Tanggal Pengembalian',
+                        'Tanggal Meminjam',
                         style: TextStyles.lSemiBold,
                       ),
                     ),
@@ -169,7 +181,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                         readOnly: true,
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
-                          _selectDate(context);
+                          selectDate(context);
                         },
                         style: TextStyles.mReguler.copyWith(color: grey3),
                         decoration: InputDecoration(
@@ -178,7 +190,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: (42 - 14) / 2, horizontal: 10),
                           suffixIcon: Icon(
-                            MdiIcons.calendarEdit,
+                            MdiIcons.calendarMonth,
                             color: mainColor,
                           ),
                         ),
@@ -188,7 +200,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Nama Barang',
+                        'Jumlah Peminjaman',
                         style: TextStyles.lSemiBold,
                       ),
                     ),
@@ -210,6 +222,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                             ),
                           ),
                         ),
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -224,8 +237,8 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                               });
                         },
                         child: Wrap(children: [
-                          const Icon(
-                            Icons.delete,
+                          Icon(
+                            MdiIcons.delete,
                             color: red,
                           ),
                           Text(
@@ -248,7 +261,26 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
           child: ButtonPrimary(
             isEnable: _isTerisi,
             text: 'Simpan Perubahan',
-            onPressed: () {},
+            onPressed: () async {
+              final supabase = SupaBaseHandler();
+              await supabase.updatePinjaman(
+                widget.dataPinjaman['id_pinjaman'],
+                _namaController.text.trim(),
+                _jumlahController.text.trim(),
+                selectedDate.toIso8601String(),
+              );
+              // ignore: use_build_context_synchronously
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/app', (route) => false);
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Peminjaman Berhasil Diperbarui'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
           ),
         ),
       ),

@@ -5,6 +5,8 @@ import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/list_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:get/get.dart';
+import 'package:lend_lab/app/services/getx_controller_service.dart';
 
 class HomeDetailsPage extends StatefulWidget {
   const HomeDetailsPage({super.key});
@@ -14,48 +16,17 @@ class HomeDetailsPage extends StatefulWidget {
 }
 
 class _HomeDetailsPageState extends State<HomeDetailsPage> {
-  List<Map<String, dynamic>> dataListUang = [
-    {
-      'id': 1,
-      'nama': 'Yanto "Pasuruan" gempa bumi',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'jumlah': 50000
-    },
-    {
-      'id': 2,
-      'nama': 'Pace Kanaeru',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'jumlah': 20000
-    },
-    {
-      'id': 3,
-      'nama': 'Wak Abdul Sungai Musi',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'jumlah': 100000
-    },
-  ];
-  List<Map<String, dynamic>> dataListBarang = [
-    {
-      'id': 1,
-      'nama': 'Mas Amba',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'barang': 'Handuk Mas Fuad'
-    },
-    {
-      'id': 2,
-      'nama': 'Mas Rusdi',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'barang': 'Baju Si Imut'
-    },
-    {
-      'id': 3,
-      'nama': 'Pak Asep',
-      'tanggal': DateFormat('d MMM yyyy').format(DateTime.now()),
-      'barang': 'Celana Mas Mursyid'
-    },
-  ];
+  List<Map<String, dynamic>> dataPinjaman =
+      Get.find<DataPinjamanController>().dataPinjaman;
+
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> dataListUang = dataPinjaman.where((item) {
+      return item['selesai'] == false && item['kategori'] == 'uang';
+    }).toList();
+    List<Map<String, dynamic>> dataListBarang = dataPinjaman.where((item) {
+      return item['selesai'] == false && item['kategori'] == 'barang';
+    }).toList();
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
@@ -93,9 +64,12 @@ class _HomeDetailsPageState extends State<HomeDetailsPage> {
                                 (index) => Column(
                                   children: [
                                     ListHomeDetailUang(
-                                      nama: dataListUang[index]['nama'],
-                                      tanggal: dataListUang[index]['tanggal'],
-                                      jumlah: dataListUang[index]['jumlah'],
+                                      nama: dataListUang[index]
+                                          ['nama_peminjam'],
+                                      tanggal: DateFormat('dd/MMM/yy').format(
+                                          DateTime.parse(dataListUang[index]
+                                              ['tanggal_meminjam'])),
+                                      jumlah: dataListUang[index]['nilai'],
                                       dataPinjaman: dataListUang[index],
                                     ),
                                     const SizedBox(height: 15),
@@ -140,14 +114,16 @@ class _HomeDetailsPageState extends State<HomeDetailsPage> {
                                   (index) => Column(
                                     children: [
                                       ListHomeDetailBarang(
-                                        nama: dataListBarang[index]['nama'],
-                                        tanggal: dataListBarang[index]
-                                            ['tanggal'],
-                                        barang: dataListBarang[index]['barang'],
+                                        nama: dataListBarang[index]
+                                            ['nama_peminjam'],
+                                        tanggal: DateFormat('dd/MMM/yy').format(
+                                            DateTime.parse(dataListBarang[index]
+                                                ['tanggal_meminjam'])),
+                                        barang: dataListBarang[index]['nilai'],
                                         dataPinjaman: dataListBarang[index],
                                       ),
                                       const SizedBox(height: 15),
-                                      index + 1 != dataListUang.length
+                                      index + 1 != dataListBarang.length
                                           ? const Divider(
                                               height: 1,
                                               color: grey1,

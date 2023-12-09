@@ -87,4 +87,32 @@ class SupaBaseHandler {
       },
     );
   }
+
+  //selesaikan pinjaman
+  selesaikanPinjaman(int idPinjaman) async {
+    var response = await client.from('Pinjaman').update({
+      'selesai': true,
+      'tanggal_pengembalian': DateTime.now().toIso8601String()
+    }).eq('id_pinjaman', idPinjaman);
+  }
+
+  //delete pinjaman
+  deletePinjaman(int idPinjaman) async {
+    var response =
+        await client.from('Pinjaman').delete().eq('id_pinjaman', idPinjaman);
+  }
+
+  //update pinjaman
+  updatePinjaman(
+    int idPinjaman,
+    String namaPeminjam,
+    String nilai,
+    String tanggal_meminjam,
+  ) async {
+    var response = await client.from('Pinjaman').update({
+      'nama_peminjam': namaPeminjam,
+      'nilai': nilai,
+      'tanggal_meminjam': tanggal_meminjam
+    }).eq('id_pinjaman', idPinjaman);
+  }
 }

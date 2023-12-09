@@ -3,6 +3,8 @@ import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:lend_lab/app/services/getx_controller_service.dart';
+import 'package:get/get.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Map<String, dynamic> dataUser = Get.find<UserController>().user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +53,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 15),
                                 child: Text(
-                                  'Felicia',
+                                  dataUser['first_name'] +
+                                      ' ' +
+                                      dataUser['last_name'],
                                   style: TextStyles.xlSemiBold
                                       .copyWith(color: black),
                                 ),

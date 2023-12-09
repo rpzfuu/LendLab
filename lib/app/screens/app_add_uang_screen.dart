@@ -49,7 +49,6 @@ class _AddUangPageState extends State<AddUangPage> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-
     if (picked != null && picked != _selectedDate) {
       setState(() {
         simpanTanggal = picked;
