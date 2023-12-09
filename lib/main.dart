@@ -13,6 +13,7 @@ import 'package:lend_lab/app/screens/auth/login_auth_screen.dart';
 import 'package:lend_lab/app/screens/auth/signup_auth_screen.dart';
 import 'package:lend_lab/app/screens/app_screen.dart';
 import 'package:lend_lab/app/screens/splash_screen.dart';
+import 'package:lend_lab/app/services/getx_controller_service.dart';
 import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -26,7 +27,9 @@ Future main() async {
     url: handler.GetURL(),
     anonKey: handler.GetKey(),
   );
-  runApp(const GetMaterialApp(home: MainApp()));
+  Get.put(UserController());
+
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -34,7 +37,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: false,

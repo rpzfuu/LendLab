@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyles.sSemiBold,
                       ),
                       const SizedBox(height: 8),
-                      Container(
+                      SizedBox(
                         height: 60,
                         child: TextFormField(
                           controller: _emailController,
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyles.sSemiBold,
                       ),
                       const SizedBox(height: 8),
-                      Container(
+                      SizedBox(
                         height: 60,
                         child: TextFormField(
                           controller: _passwordController,
