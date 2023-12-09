@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:lend_lab/app/services/getx_controller_service.dart';
 import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/app/widgets/button_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
@@ -150,8 +153,9 @@ class _LoginPageState extends State<LoginPage> {
                                 _emailController.text.trim(),
                                 _passwordController.text.trim());
                             if (mounted) {
-                              // ignore: unnecessary_null_comparison
                               if (idUser != null) {
+                                Get.find<UserController>()
+                                    .updateUser(idUser['id_user']);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Masuk Sukses!'),
@@ -161,7 +165,9 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                                 Navigator.pushNamedAndRemoveUntil(
                                     context, '/app', (route) => false,
-                                    arguments: idUser['id_user']);
+                                    arguments: Get.find<UserController>()
+                                        .idUser
+                                        .value);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

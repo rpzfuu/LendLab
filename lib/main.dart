@@ -46,13 +46,6 @@ class MainApp extends StatelessWidget {
       initialRoute: '/splash',
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case '/app':
-            {
-              final int value = settings.arguments as int;
-              return MaterialPageRoute(
-                builder: (context) => AppPage(idUser: value),
-              );
-            }
           case '/app/add':
             {
               final int value = settings.arguments as int;
@@ -87,7 +80,7 @@ class MainApp extends StatelessWidget {
         '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
-        // '/app': (context) => const AppPage(),
+        '/app': (context) => const AppPage(),
         // '/app/home': (context) => const HomePage(),
         '/app/home/details': (context) => const HomeDetailsPage(),
         // '/app/home/details/uang': (context) => const HomeDetailsUangPage(),

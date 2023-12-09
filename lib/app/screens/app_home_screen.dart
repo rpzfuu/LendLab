@@ -5,23 +5,25 @@ import 'package:lend_lab/app/widgets/appbar_widget.dart';
 import 'package:lend_lab/app/widgets/list_widget.dart';
 import 'package:lend_lab/theme/app_colors.dart';
 import 'package:lend_lab/theme/app_text_styles.dart';
+import 'package:get/get.dart';
+import 'package:lend_lab/app/services/getx_controller_service.dart';
 
 class HomePage extends StatefulWidget {
-  final int idUser;
-  const HomePage({super.key, required this.idUser});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  int idUser = Get.find<UserController>().idUser.value;
   final supabase = SupaBaseHandler();
 
   late Future<List<Map<String, dynamic>>> dataPinjaman;
   @override
   void initState() {
     super.initState();
-    dataPinjaman = supabase.dataPinjamanUser(widget.idUser);
+    dataPinjaman = supabase.dataPinjamanUser(idUser);
   }
 
   String searchQuery = '';
@@ -49,7 +51,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int idUser = widget.idUser;
     final dataUser = supabase.dataUser(idUser);
 
     return Scaffold(
