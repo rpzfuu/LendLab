@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 0, horizontal: 16),
-                          hintText: 'Enter Your Email',
+                          hintText: 'Masukkan Email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      'Password',
+                      'Kata Sandi',
                       style: TextStyles.sSemiBold,
                     ),
                     const SizedBox(height: 8),
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 0, horizontal: 16),
-                          hintText: 'Enter Password Here',
+                          hintText: 'Masukkan Kata sandi',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 25),
                     ButtonPrimary(
                       isEnable: terisi,
-                      text: 'Login',
+                      text: 'Masuk',
                       onPressed: () async {
                         final handler = SupaBaseHandler();
                         final idUser = await handler.getID(
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (idUser != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Login Sukses!'),
+                                content: Text('Masuk Sukses!'),
                                 backgroundColor: Colors.green,
                                 duration: Duration(seconds: 2),
                               ),
@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Login Gagal'),
+                                content: Text('Masuk Gagal'),
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 2),
                               ),
@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Don`t have account?',
+                          'Tidak Punya Akun?',
                           style: TextStyles.sMedium.copyWith(color: grey2),
                         ),
                         TextButton(
@@ -162,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushNamed(context, '/signup');
                             },
                             child: Text(
-                              'Sign Up',
+                              'Mendaftar',
                               style:
                                   TextStyles.sMedium.copyWith(color: mainColor),
                             ))
