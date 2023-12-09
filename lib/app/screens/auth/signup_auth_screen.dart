@@ -77,6 +77,7 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Form(
+                  key: _loginfield,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -178,7 +179,7 @@ class _SignupPageState extends State<SignupPage> {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 16),
-                            hintText: 'Masukkan Kata Sandi Disini',
+                            hintText: 'Masukkan Kata Sandi',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
