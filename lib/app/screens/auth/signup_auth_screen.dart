@@ -13,6 +13,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  final _loginfield = GlobalKey<FormState>();
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -75,164 +76,191 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 35),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Nama Lengkap',
-                      style: TextStyles.sSemiBold,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 10,
-                          child: SizedBox(
-                            height: 40,
-                            child: TextFormField(
-                              controller: _firstnameController,
-                              style: TextStyles.sReguler,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 16),
-                                hintText: 'Nama Depan',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                child: Form(
+                  key: _loginfield,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Nama Lengkap',
+                        style: TextStyles.sSemiBold,
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 10,
+                            child: SizedBox(
+                              height: 40,
+                              child: TextFormField(
+                                controller: _firstnameController,
+                                style: TextStyles.sReguler,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 16),
+                                  hintText: 'Nama Depan',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const Expanded(flex: 1, child: SizedBox()),
-                        Expanded(
-                          flex: 10,
-                          child: SizedBox(
-                            height: 40,
-                            child: TextFormField(
-                              controller: _lastnameController,
-                              style: TextStyles.sReguler,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 16),
-                                hintText: 'Nama Belakang',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                          const Expanded(flex: 1, child: SizedBox()),
+                          Expanded(
+                            flex: 10,
+                            child: SizedBox(
+                              height: 40,
+                              child: TextFormField(
+                                controller: _lastnameController,
+                                style: TextStyles.sReguler,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 16),
+                                  hintText: 'Nama Belakang',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Email',
-                      style: TextStyles.sSemiBold,
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        controller: _emailController,
-                        style: TextStyles.sReguler,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 16),
-                          hintText: 'Masukkan Email-mu',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Email',
+                        style: TextStyles.sSemiBold,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _emailController,
+                          style: TextStyles.sReguler,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            hintText: 'Masukkan Email-mu',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Masukkan";
+                            }
+                            bool emailValid = RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value);
+                            if (!emailValid) {
+                              return "Masukkan Email Yang Valid";
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Kata Sandi',
-                      style: TextStyles.sSemiBold,
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        style: TextStyles.sReguler,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 16),
-                          hintText: 'Masukkan Kata Sandi Disini',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Kata Sandi',
+                        style: TextStyles.sSemiBold,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          style: TextStyles.sReguler,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            hintText: 'Masukkan Kata Sandi',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Masukkan Kata Sandi";
+                            }
+                            if (value.length < 6) {
+                              return "Kata Sandi harus lebih dari 6 karakter";
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 25),
-                    ButtonPrimary(
-                      isEnable: terisi,
-                      text: 'Buat Akun',
-                      onPressed: () async {
-                        final handler = SupaBaseHandler();
-                        try {
-                          await handler.addUser(
-                            _firstnameController.text.trim(),
-                            _lastnameController.text.trim(),
-                            _emailController.text.trim(),
-                            _passwordController.text.trim(),
-                          );
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Berhasil Membuat Akun, Silahkan Langsung Login'),
-                                backgroundColor: Colors.green,
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, '/login', (route) => false);
-                          }
-                        } catch (e) {
-                          if (e is PostgrestException && e.code == '23505') {
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Email sudah digunakan, silakan gunakan email lain.'),
-                                  backgroundColor: Colors.red,
-                                  duration: Duration(seconds: 2),
-                                ),
+                      const SizedBox(height: 25),
+                      ButtonPrimary(
+                        isEnable: terisi,
+                        text: 'Buat Akun',
+                        onPressed: () async {
+                          if (_loginfield.currentState!.validate()) {
+                            final handler = SupaBaseHandler();
+                            try {
+                              await handler.addUser(
+                                _firstnameController.text.trim(),
+                                _lastnameController.text.trim(),
+                                _emailController.text.trim(),
+                                _passwordController.text.trim(),
                               );
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Berhasil Membuat Akun, Silahkan Langsung Login'),
+                                    backgroundColor: Colors.green,
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/login', (route) => false);
+                              }
+                            } catch (e) {
+                              if (e is PostgrestException &&
+                                  e.code == '23505') {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Email sudah digunakan, silakan gunakan email lain.'),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              }
                             }
                           }
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sudah Punya Akun?',
-                          style: TextStyles.sMedium.copyWith(color: grey2),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/login');
-                            },
-                            child: Text(
-                              'Masuk',
-                              style:
-                                  TextStyles.sMedium.copyWith(color: mainColor),
-                            ))
-                      ],
-                    ),
-                    const SizedBox(height: 50),
-                  ],
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Sudah Punya Akun?',
+                            style: TextStyles.sMedium.copyWith(color: grey2),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/login');
+                              },
+                              child: Text(
+                                'Masuk',
+                                style: TextStyles.sMedium
+                                    .copyWith(color: mainColor),
+                              ))
+                        ],
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
                 ),
               )
             ],
