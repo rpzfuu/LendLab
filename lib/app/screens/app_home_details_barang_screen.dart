@@ -200,7 +200,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Jumlah Peminjaman',
+                        'Nama Barang',
                         style: TextStyles.lSemiBold,
                       ),
                     ),
