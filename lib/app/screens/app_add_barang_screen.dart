@@ -19,12 +19,14 @@ class AddBarangPage extends StatefulWidget {
 
 class _AddBarangPageState extends State<AddBarangPage> {
   int idUser = Get.find<UserController>().idUser.value;
-  late DateTime simpanTanggal;
+  DateTime simpanTanggal = DateTime.now();
   final _namaPeminjamController = TextEditingController();
   final _namaNilaiController = TextEditingController();
   final _dateController = TextEditingController();
   bool terisi = false;
+  bool _isSubmitting = false;
   void isTerisi() {
+    if (!mounted) return;
     bool temp = _namaNilaiController.text.isNotEmpty &&
         _namaPeminjamController.text.isNotEmpty &&
         _dateController.text.isNotEmpty;
@@ -39,6 +41,70 @@ class _AddBarangPageState extends State<AddBarangPage> {
     _namaNilaiController.addListener(isTerisi);
     _namaPeminjamController.addListener(isTerisi);
     _dateController.addListener(isTerisi);
+  }
+
+  @override
+  void dispose() {
+    _namaNilaiController.dispose();
+    _namaPeminjamController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  void _showSnackBar(String message, Color backgroundColor) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: backgroundColor,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (_isSubmitting) return;
+
+    if (_namaPeminjamController.text.trim().isEmpty ||
+        _namaNilaiController.text.trim().isEmpty ||
+        _dateController.text.trim().isEmpty) {
+      _showSnackBar('Lengkapi semua data terlebih dahulu', Colors.red);
+      return;
+    }
+
+    if (simpanTanggal.isAfter(DateTime.now())) {
+      _showSnackBar(
+          'Tanggal meminjam tidak boleh melebihi hari ini', Colors.red);
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    try {
+      final supabase = SupaBaseHandler();
+      await supabase.addPinjaman(
+        idUser,
+        _namaPeminjamController.text.trim(),
+        _namaNilaiController.text.trim(),
+        simpanTanggal.toIso8601String(),
+        'barang',
+      );
+
+      if (!mounted) return;
+      _showSnackBar('Peminjaman berhasil ditambahkan', Colors.green);
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/app/add/success', (route) => false);
+    } catch (error) {
+      if (!mounted) return;
+      _showSnackBar(error.toString(), Colors.red);
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
   }
 
   DateTime _selectedDate = DateTime.now();
@@ -312,21 +378,10 @@ class _AddBarangPageState extends State<AddBarangPage> {
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 40),
         child: BottomAppBar(
           child: ButtonPrimary(
-            isEnable: terisi,
+            isEnable: terisi && !_isSubmitting,
+            isLoading: _isSubmitting,
             text: 'Lanjutkan',
-            onPressed: () async {
-              final supabase = SupaBaseHandler();
-              supabase.addPinjaman(
-                  idUser,
-                  _namaPeminjamController.text.trim(),
-                  _namaNilaiController.text.trim(),
-                  simpanTanggal.toIso8601String(),
-                  'barang');
-              if (mounted) {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/app/add/success', (route) => false);
-              }
-            },
+            onPressed: _submit,
           ),
         ),
       ),

@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                               Map<String, dynamic> dataUser =
                                   await supabase.dataUser(idUser['id_user']);
                               Get.find<UserController>().updateUser(dataUser);
-                              if (mounted) {
+                              if (context.mounted) {
                                 Get.find<UserController>()
                                     .updateUserID(idUser['id_user']);
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                                         .value);
                               }
                             } else {
-                              if (mounted) {
+                              if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Masuk Gagal'),

@@ -30,6 +30,37 @@ class _HomePageState extends State<HomePage> {
 
   String searchQuery = '';
 
+  String get _userName {
+    final firstName = dataUser['first_name']?.toString().trim() ?? '';
+    final lastName = dataUser['last_name']?.toString().trim() ?? '';
+    final fullName = '$firstName $lastName'.trim();
+
+    return fullName.isEmpty ? 'User' : fullName;
+  }
+
+  Widget _buildErrorState() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Column(
+        children: [
+          Text(
+            'Gagal memuat data peminjaman',
+            style: TextStyles.mMedium.copyWith(color: red),
+          ),
+          const SizedBox(height: 10),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                dataPinjaman = supabase.dataPinjamanUser(idUser);
+              });
+            },
+            child: const Text('Coba lagi'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.put(DataPinjamanController());
@@ -40,7 +71,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             AppBarWelcome(
-              nama: dataUser['first_name'] + ' ' + dataUser['last_name'],
+              nama: _userName,
               onChanged: (value) {
                 setState(() {
                   searchQuery = value;
@@ -76,13 +107,19 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  FutureBuilder(
+                  FutureBuilder<List<Map<String, dynamic>>>(
                     future: dataPinjaman,
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
+                      }
+                      if (snapshot.hasError) {
+                        return _buildErrorState();
+                      }
+                      if (!snapshot.hasData) {
+                        return const SizedBox();
                       }
                       final data = snapshot.data!;
                       Get.find<DataPinjamanController>()
@@ -92,15 +129,19 @@ class _HomePageState extends State<HomePage> {
                         return item['kategori'] == 'uang' &&
                             item['selesai'] == false &&
                             (item['nama_peminjam']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
                                 item['tanggal_meminjam']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
                                 item['nilai']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
                                 item['kategori']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()));
                       }).toList();
@@ -109,15 +150,19 @@ class _HomePageState extends State<HomePage> {
                         return item['kategori'] == 'barang' &&
                             item['selesai'] == false &&
                             (item['nama_peminjam']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
                                 item['tanggal_meminjam']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
                                 item['nilai']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()) ||
                                 item['kategori']
+                                    .toString()
                                     .toLowerCase()
                                     .contains(searchQuery.toLowerCase()));
                       }).toList();

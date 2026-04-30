@@ -183,20 +183,31 @@ class ListHomeDetailUang extends StatelessWidget {
                 ButtonHapus(
                   text: 'Selesaikan',
                   onPressed: () async {
-                    final supabase = SupaBaseHandler();
-                    await supabase
-                        .selesaikanPinjaman(dataPinjaman['id_pinjaman']);
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/app', (route) => false);
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Peminjaman Berhasil Diselesaikan'),
-                        backgroundColor: Colors.green,
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
+                    try {
+                      final supabase = SupaBaseHandler();
+                      await supabase
+                          .selesaikanPinjaman(dataPinjaman['id_pinjaman']);
+
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Peminjaman berhasil diselesaikan'),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/app', (route) => false);
+                    } catch (error) {
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(error.toString()),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                 ),
               ],
@@ -329,20 +340,31 @@ class ListHomeDetailBarang extends StatelessWidget {
               ButtonHapus(
                 text: 'Selesaikan',
                 onPressed: () async {
-                  final supabase = SupaBaseHandler();
-                  await supabase
-                      .selesaikanPinjaman(dataPinjaman['id_pinjaman']);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/app', (route) => false);
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Peminjaman Berhasil Diselesaikan'),
-                      backgroundColor: Colors.green,
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
+                  try {
+                    final supabase = SupaBaseHandler();
+                    await supabase
+                        .selesaikanPinjaman(dataPinjaman['id_pinjaman']);
+
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Peminjaman berhasil diselesaikan'),
+                        backgroundColor: Colors.green,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/app', (route) => false);
+                  } catch (error) {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(error.toString()),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  }
                 },
               )
             ]),

@@ -209,7 +209,7 @@ class _SignupPageState extends State<SignupPage> {
                                 _emailController.text.trim(),
                                 _passwordController.text.trim(),
                               );
-                              if (mounted) {
+                              if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -224,7 +224,7 @@ class _SignupPageState extends State<SignupPage> {
                             } catch (e) {
                               if (e is PostgrestException &&
                                   e.code == '23505') {
-                                if (mounted) {
+                                if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text(

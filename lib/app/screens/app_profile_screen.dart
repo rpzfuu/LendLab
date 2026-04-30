@@ -15,6 +15,15 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Map<String, dynamic> dataUser = Get.find<UserController>().user;
+
+  String get _userName {
+    final firstName = dataUser['first_name']?.toString().trim() ?? '';
+    final lastName = dataUser['last_name']?.toString().trim() ?? '';
+    final fullName = '$firstName $lastName'.trim();
+
+    return fullName.isEmpty ? 'User' : fullName;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,9 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 15),
                                 child: Text(
-                                  dataUser['first_name'] +
-                                      ' ' +
-                                      dataUser['last_name'],
+                                  _userName,
                                   style: TextStyles.xlSemiBold
                                       .copyWith(color: black),
                                 ),
@@ -71,7 +78,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           border: Border(
                               bottom: BorderSide(width: 1, color: grey2))),
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Pengaturan belum tersedia'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        },
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
                           padding: const EdgeInsets.all(0),

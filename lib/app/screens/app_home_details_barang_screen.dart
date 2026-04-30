@@ -20,7 +20,9 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
   final _namaController = TextEditingController();
   final _jumlahController = TextEditingController();
   bool _isTerisi = false;
+  bool _isUpdating = false;
   void isTerisi() {
+    if (!mounted) return;
     bool temp = _namaController.text.isNotEmpty &&
         _jumlahController.text.isNotEmpty &&
         _dateController.text.isNotEmpty;
@@ -42,6 +44,68 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
         .format(DateTime.parse(dataPinjaman['tanggal_meminjam']));
     _jumlahController.text = dataPinjaman['nilai'];
     selectedDate = DateTime.parse(widget.dataPinjaman['tanggal_meminjam']);
+  }
+
+  @override
+  void dispose() {
+    _namaController.dispose();
+    _jumlahController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  void _showSnackBar(String message, Color backgroundColor) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: backgroundColor,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Future<void> _updatePinjaman() async {
+    if (_isUpdating) return;
+
+    if (_namaController.text.trim().isEmpty ||
+        _jumlahController.text.trim().isEmpty ||
+        _dateController.text.trim().isEmpty) {
+      _showSnackBar('Lengkapi semua data terlebih dahulu', Colors.red);
+      return;
+    }
+
+    if (selectedDate.isAfter(DateTime.now())) {
+      _showSnackBar(
+          'Tanggal meminjam tidak boleh melebihi hari ini', Colors.red);
+      return;
+    }
+
+    setState(() {
+      _isUpdating = true;
+    });
+
+    try {
+      final supabase = SupaBaseHandler();
+      await supabase.updatePinjaman(
+        widget.dataPinjaman['id_pinjaman'],
+        _namaController.text.trim(),
+        _jumlahController.text.trim(),
+        selectedDate.toIso8601String(),
+      );
+
+      if (!mounted) return;
+      _showSnackBar('Peminjaman berhasil diperbarui', Colors.green);
+      Navigator.pushNamedAndRemoveUntil(context, '/app', (route) => false);
+    } catch (error) {
+      if (!mounted) return;
+      _showSnackBar(error.toString(), Colors.red);
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUpdating = false;
+        });
+      }
+    }
   }
 
   final _dateController = TextEditingController();
@@ -67,52 +131,66 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
     double mWidth = MediaQuery.of(context).size.width;
     double mHeight = MediaQuery.of(context).size.height;
     Widget bottomWidget() {
-      return Container(
-        color: mainColor,
-        width: mWidth,
-        height: mHeight / 4,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Yakin mau dihapus?',
-              style: TextStyles.lSemiBold.copyWith(color: white),
+      bool isCompleting = false;
+      return StatefulBuilder(
+        builder: (modalContext, setModalState) {
+          return Container(
+            color: mainColor,
+            width: mWidth,
+            height: mHeight / 4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Selesaikan peminjaman?',
+                  style: TextStyles.lSemiBold.copyWith(color: white),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Data akan dipindahkan ke halaman riwayat',
+                  style: TextStyles.mReguler.copyWith(color: white),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Wrap(children: [
+                  ButtonBatal(
+                      text: 'Batal',
+                      onPressed: () {
+                        if (!isCompleting) Navigator.pop(modalContext);
+                      }),
+                  const SizedBox(width: 10),
+                  ButtonHapus(
+                    text: 'Selesaikan',
+                    isLoading: isCompleting,
+                    onPressed: () async {
+                      setModalState(() {
+                        isCompleting = true;
+                      });
+
+                      try {
+                        final supabase = SupaBaseHandler();
+                        await supabase.selesaikanPinjaman(
+                            widget.dataPinjaman['id_pinjaman']);
+
+                        if (!context.mounted) return;
+                        _showSnackBar(
+                            'Peminjaman berhasil diselesaikan', Colors.green);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/app', (route) => false);
+                      } catch (error) {
+                        if (!context.mounted) return;
+                        _showSnackBar(error.toString(), Colors.red);
+                        setModalState(() {
+                          isCompleting = false;
+                        });
+                      }
+                    },
+                  )
+                ]),
+              ],
             ),
-            const SizedBox(height: 5),
-            Text(
-              'Data mu akan hilang selamanya',
-              style: TextStyles.mReguler.copyWith(color: white),
-            ),
-            const SizedBox(height: 20),
-            Wrap(children: [
-              ButtonBatal(
-                  text: 'Batal',
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-              const SizedBox(width: 10),
-              ButtonHapus(
-                text: 'Hapus',
-                onPressed: () async {
-                  final supabase = SupaBaseHandler();
-                  await supabase
-                      .selesaikanPinjaman(widget.dataPinjaman['id_pinjaman']);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/app', (route) => false);
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Peminjaman Berhasil Dihapus'),
-                      backgroundColor: Colors.red,
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                },
-              )
-            ]),
-          ],
-        ),
+          );
+        },
       );
     }
 
@@ -222,7 +300,7 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                             ),
                           ),
                         ),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -238,12 +316,12 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
                         },
                         child: Wrap(children: [
                           Icon(
-                            MdiIcons.delete,
-                            color: red,
+                            MdiIcons.checkCircle,
+                            color: done,
                           ),
                           Text(
-                            'Hapus',
-                            style: TextStyles.lMedium.copyWith(color: red),
+                            'Selesaikan',
+                            style: TextStyles.lMedium.copyWith(color: done),
                           ),
                         ]),
                       ),
@@ -259,28 +337,10 @@ class _HomeDetailsBarangPageState extends State<HomeDetailsBarangPage> {
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 40),
         child: BottomAppBar(
           child: ButtonPrimary(
-            isEnable: _isTerisi,
+            isEnable: _isTerisi && !_isUpdating,
+            isLoading: _isUpdating,
             text: 'Simpan Perubahan',
-            onPressed: () async {
-              final supabase = SupaBaseHandler();
-              await supabase.updatePinjaman(
-                widget.dataPinjaman['id_pinjaman'],
-                _namaController.text.trim(),
-                _jumlahController.text.trim(),
-                selectedDate.toIso8601String(),
-              );
-              // ignore: use_build_context_synchronously
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/app', (route) => false);
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Peminjaman Berhasil Diperbarui'),
-                  backgroundColor: Colors.green,
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
+            onPressed: _updatePinjaman,
           ),
         ),
       ),

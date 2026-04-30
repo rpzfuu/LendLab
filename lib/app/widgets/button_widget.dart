@@ -6,12 +6,14 @@ class ButtonPrimary extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isEnable;
+  final bool isLoading;
 
   const ButtonPrimary(
       {super.key,
       required this.text,
       required this.onPressed,
-      required this.isEnable});
+      required this.isEnable,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,17 @@ class ButtonPrimary extends StatelessWidget {
           minimumSize: const Size(double.infinity, 55),
           disabledBackgroundColor: grey4,
         ),
-        onPressed: isEnable ? onPressed : null,
-        child: Text(text, style: TextStyles.lSemiBold.copyWith(color: white)));
+        onPressed: isEnable && !isLoading ? onPressed : null,
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(white),
+                ),
+              )
+            : Text(text, style: TextStyles.lSemiBold.copyWith(color: white)));
   }
 }
 
@@ -89,8 +100,13 @@ class ButtonBatal extends StatelessWidget {
 class ButtonHapus extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final bool isLoading;
 
-  const ButtonHapus({super.key, required this.text, required this.onPressed});
+  const ButtonHapus(
+      {super.key,
+      required this.text,
+      required this.onPressed,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +115,19 @@ class ButtonHapus extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           minimumSize: const Size(150, 60),
+          disabledBackgroundColor: grey4,
         ),
-        onPressed: onPressed,
-        child: Text(text, style: TextStyles.lMedium.copyWith(color: white)));
+        onPressed: isLoading ? null : onPressed,
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(white),
+                ),
+              )
+            : Text(text, style: TextStyles.lMedium.copyWith(color: white)));
   }
 }
 

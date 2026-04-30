@@ -17,16 +17,18 @@ import 'package:lend_lab/app/screens/splash_screen.dart';
 import 'package:lend_lab/app/services/getx_controller_service.dart';
 import 'package:lend_lab/app/services/supabase_handler_service.dart';
 import 'package:lend_lab/theme/app_colors.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:get/get.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final handler = SupaBaseHandler();
+  await dotenv.load(fileName: '.env');
+
   await Supabase.initialize(
-    url: handler.GetURL(),
-    anonKey: handler.GetKey(),
+    url: SupaBaseHandler.supabaseUrl,
+    anonKey: SupaBaseHandler.supabaseAnonKey,
   );
   Get.put(UserController());
 

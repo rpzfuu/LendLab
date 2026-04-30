@@ -27,6 +27,30 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   String searchQuery = '';
+
+  Widget _buildErrorState() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Column(
+        children: [
+          Text(
+            'Gagal memuat riwayat peminjaman',
+            style: TextStyles.mMedium.copyWith(color: red),
+          ),
+          const SizedBox(height: 10),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                dataPinjaman = supabase.dataPinjamanUser(idUser);
+              });
+            },
+            child: const Text('Coba lagi'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,31 +77,43 @@ class _HistoryPageState extends State<HistoryPage> {
                       'Peminjaman Terakhir',
                       style: TextStyles.lSemiBold,
                     ),
-                    FutureBuilder(
+                    FutureBuilder<List<Map<String, dynamic>>>(
                       future: dataPinjaman,
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
+                        }
+                        if (snapshot.hasError) {
+                          return _buildErrorState();
+                        }
+                        if (!snapshot.hasData) {
+                          return const SizedBox();
                         }
                         final data = snapshot.data!;
                         List<Map<String, dynamic>> dataListHistory =
                             data.where((item) {
                           return item['selesai'] == true &&
                               (item['nama_peminjam']
+                                      .toString()
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase()) ||
                                   item['nilai']
+                                      .toString()
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase()) ||
                                   item['kategori']
+                                      .toString()
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase()) ||
                                   item['tanggal_meminjam']
+                                      .toString()
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase()) ||
                                   item['tanggal_pengembalian']
+                                      .toString()
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase()));
                         }).toList();

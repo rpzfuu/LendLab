@@ -1,20 +1,20 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, deprecated_member_use
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaBaseHandler {
-  static String SupabaseURL = "https://enehpaaaycwnqfcugiqe.supabase.co";
-  static String SupabaseKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVuZWhwYWFheWN3bnFmY3VnaXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE0OTkyNjYsImV4cCI6MjAxNzA3NTI2Nn0.1DrLVsffVCpaBVXVJWixHZDmCSXeRCaqcFAODUnDCco";
+  static String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? '';
+  static String get supabaseAnonKey => dotenv.env['SUPABASE_ANON_KEY'] ?? '';
 
-  final client = SupabaseClient(SupabaseURL, SupabaseKey);
+  SupabaseClient get client => Supabase.instance.client;
 
   String GetURL() {
-    return SupabaseURL;
+    return supabaseUrl;
   }
 
   String GetKey() {
-    return SupabaseKey;
+    return supabaseAnonKey;
   }
 
   //signup
@@ -75,44 +75,59 @@ class SupaBaseHandler {
   }
 
   //tambahkan pinjaman
-  addPinjaman(int idUser, String namaPeminjam, String nilai,
+  Future<void> addPinjaman(int idUser, String namaPeminjam, String nilai,
       String tanggalMeminjam, String kategori) async {
-    var response = await client.from('Pinjaman').insert(
-      {
-        'id_user': idUser,
-        'nama_peminjam': namaPeminjam,
-        'nilai': nilai,
-        'tanggal_meminjam': tanggalMeminjam,
-        'kategori': kategori,
-      },
-    );
+    try {
+      await client.from('Pinjaman').insert(
+        {
+          'id_user': idUser,
+          'nama_peminjam': namaPeminjam,
+          'nilai': nilai,
+          'tanggal_meminjam': tanggalMeminjam,
+          'kategori': kategori,
+        },
+      );
+    } catch (error) {
+      throw Exception('Gagal menambahkan peminjaman: $error');
+    }
   }
 
   //selesaikan pinjaman
-  selesaikanPinjaman(int idPinjaman) async {
-    var response = await client.from('Pinjaman').update({
-      'selesai': true,
-      'tanggal_pengembalian': DateTime.now().toIso8601String()
-    }).eq('id_pinjaman', idPinjaman);
+  Future<void> selesaikanPinjaman(int idPinjaman) async {
+    try {
+      await client.from('Pinjaman').update({
+        'selesai': true,
+        'tanggal_pengembalian': DateTime.now().toIso8601String()
+      }).eq('id_pinjaman', idPinjaman);
+    } catch (error) {
+      throw Exception('Gagal menyelesaikan peminjaman: $error');
+    }
   }
 
   //delete pinjaman
-  deletePinjaman(int idPinjaman) async {
-    var response =
-        await client.from('Pinjaman').delete().eq('id_pinjaman', idPinjaman);
+  Future<void> deletePinjaman(int idPinjaman) async {
+    try {
+      await client.from('Pinjaman').delete().eq('id_pinjaman', idPinjaman);
+    } catch (error) {
+      throw Exception('Gagal menghapus peminjaman: $error');
+    }
   }
 
   //update pinjaman
-  updatePinjaman(
+  Future<void> updatePinjaman(
     int idPinjaman,
     String namaPeminjam,
     String nilai,
     String tanggal_meminjam,
   ) async {
-    var response = await client.from('Pinjaman').update({
-      'nama_peminjam': namaPeminjam,
-      'nilai': nilai,
-      'tanggal_meminjam': tanggal_meminjam
-    }).eq('id_pinjaman', idPinjaman);
+    try {
+      await client.from('Pinjaman').update({
+        'nama_peminjam': namaPeminjam,
+        'nilai': nilai,
+        'tanggal_meminjam': tanggal_meminjam
+      }).eq('id_pinjaman', idPinjaman);
+    } catch (error) {
+      throw Exception('Gagal memperbarui peminjaman: $error');
+    }
   }
 }

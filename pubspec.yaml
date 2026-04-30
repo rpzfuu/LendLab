@@ -20,9 +20,13 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
 
+dependency_overrides:
+  sign_in_with_apple: ^7.0.1
+
 flutter:
   uses-material-design: true
   assets:
+    - .env
     - lib/assets/images/splash_screen.png
     - lib/assets/images/login_auth_screen.png
     - lib/assets/images/signup_auth_screen.png

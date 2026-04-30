@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lend_lab/app/screens/app_add_screen.dart';
 import 'package:lend_lab/app/services/getx_controller_service.dart';
 import 'package:lend_lab/app/screens/app_history_screen.dart';
 
@@ -39,14 +40,14 @@ class _AppPageState extends State<AppPage> {
           showUnselectedLabels: true,
           currentIndex: currentPageIndex,
           onTap: (int index) {
-            switch (index) {
-              case 1:
-                Navigator.pushNamed(context, '/app/add', arguments: idUser);
-              default:
-                setState(() {
-                  currentPageIndex = index;
-                });
+            if (index == 1) {
+              Navigator.pushNamed(context, '/app/add', arguments: idUser);
+              return;
             }
+
+            setState(() {
+              currentPageIndex = index;
+            });
           },
           backgroundColor: white,
           selectedItemColor: mainColor,
@@ -75,7 +76,7 @@ class _AppPageState extends State<AppPage> {
         index: currentPageIndex,
         children: const [
           HomePage(),
-          Placeholder(),
+          AddPage(),
           HistoryPage(),
           ProfilePage(),
         ],
