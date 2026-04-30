@@ -1,34 +1,36 @@
 # LendLab
 
-LendLab is a Flutter app for tracking borrowed money and items. It helps users record who borrowed something, what was borrowed, when it was borrowed, and whether it has been returned.
+**Bahasa:** **ID** | [EN](README_en.md)
 
-The app was originally built as a lightweight lending tracker with a custom Supabase-backed data model.
+LendLab adalah aplikasi Flutter untuk mencatat pinjaman uang dan barang. Aplikasi ini membantu pengguna mencatat siapa yang meminjam, apa yang dipinjam, kapan pinjaman dibuat, dan apakah pinjaman sudah dikembalikan.
 
-## Features
+Aplikasi ini awalnya dibuat sebagai pencatat pinjaman ringan dengan model data khusus yang terhubung ke Supabase.
 
-- Register and sign in with a simple account system.
-- Add money loans.
-- Add item loans.
-- View active borrow records.
-- Search borrow records.
-- Edit borrow details.
-- Mark borrow records as completed.
-- View completed borrow history.
-- Loading and error feedback for Supabase operations.
+## Fitur
 
-## Screens
+- Daftar dan masuk dengan sistem akun sederhana.
+- Tambah pinjaman uang.
+- Tambah pinjaman barang.
+- Lihat daftar pinjaman aktif.
+- Cari data pinjaman.
+- Edit detail pinjaman.
+- Tandai pinjaman sebagai selesai.
+- Lihat riwayat pinjaman yang sudah selesai.
+- Tampilkan status loading dan pesan error untuk operasi Supabase.
 
-The app includes:
+## Layar
+
+Aplikasi ini mencakup:
 
 - Splash screen
-- Login and signup screens
-- Home screen
-- Add loan type selection
-- Add money loan form
-- Add item loan form
-- Detail and edit screens
-- History screen
-- Profile screen
+- Layar login dan signup
+- Layar beranda
+- Pilihan jenis pinjaman
+- Form tambah pinjaman uang
+- Form tambah pinjaman barang
+- Layar detail dan edit
+- Layar riwayat
+- Layar profil
 
 ## Tech Stack
 
@@ -39,14 +41,14 @@ The app includes:
 - PostgreSQL
 - flutter_dotenv
 
-## Requirements
+## Kebutuhan
 
 - Flutter SDK
-- Android SDK or Android Studio
-- Supabase project
-- Android device or emulator
+- Android SDK atau Android Studio
+- Project Supabase
+- Perangkat Android atau emulator
 
-This project has been validated with:
+Project ini sudah divalidasi dengan:
 
 - Flutter `3.38.9`
 - Dart `3.10.8`
@@ -55,72 +57,72 @@ This project has been validated with:
 - Android Gradle Plugin `8.11.1`
 - Kotlin `2.2.20`
 
-## Configuration
+## Konfigurasi
 
-Create a `.env` file in the project root:
+Buat file `.env` di root project:
 
 ```env
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-A template is available in [.env.example](.env.example).
+Template tersedia di [.env.example](.env.example).
 
 ## Database
 
-LendLab uses two public Supabase tables:
+LendLab menggunakan dua tabel publik Supabase:
 
 - `public."User"`
 - `public."Pinjaman"`
 
-The restore script [supabase_lendlab_restore.sql](supabase_lendlab_restore.sql) recreates the app tables, seed data, grants, sequences, and realtime publication entries.
+Script restore [supabase_lendlab_restore.sql](supabase_lendlab_restore.sql) membuat ulang tabel aplikasi, seed data, grants, sequences, dan entri realtime publication.
 
-It is designed for Supabase SQL Editor and intentionally excludes Supabase-managed cluster objects such as roles, `auth`, `storage`, and internal realtime setup.
+Script ini dirancang untuk Supabase SQL Editor dan sengaja tidak menyertakan object cluster yang dikelola Supabase, seperti roles, `auth`, `storage`, dan setup realtime internal.
 
-## Getting Started
+## Cara Menjalankan
 
-Install dependencies:
+Install dependency:
 
 ```powershell
 flutter pub get
 ```
 
-Run the app:
+Jalankan aplikasi:
 
 ```powershell
 flutter run
 ```
 
-Build a debug APK:
+Build APK debug:
 
 ```powershell
 flutter build apk --debug
 ```
 
-Build a release APK:
+Build APK release:
 
 ```powershell
 flutter build apk --release
 ```
 
-Release APK output:
+Output APK release:
 
 ```text
 build/app/outputs/flutter-apk/app-release.apk
 ```
 
-## Validation
+## Validasi
 
 ```powershell
 flutter analyze
 flutter build apk --debug
 ```
 
-There is currently no `test` directory, so automated tests are not included yet.
+Saat ini belum ada direktori `test`, jadi automated test belum disertakan.
 
-## Release Notes Template
+## Template Release Notes
 
-Suggested GitHub release format:
+Format GitHub release yang disarankan:
 
 - Tag: `v0.1.0`
 - Target: `main`
@@ -129,14 +131,14 @@ Suggested GitHub release format:
 ```markdown
 ## LendLab v0.1.0
 
-Initial release of LendLab, a Flutter app for tracking borrowed money and items.
+Rilis awal LendLab, aplikasi Flutter untuk mencatat pinjaman uang dan barang.
 
 ### Highlights
-- Money and item loan tracking.
-- Active loan list and completed loan history.
-- Supabase-backed persistence.
-- Loading and error feedback for data operations.
-- Android build configuration updated for modern Flutter tooling.
+- Pencatatan pinjaman uang dan barang.
+- Daftar pinjaman aktif dan riwayat pinjaman selesai.
+- Penyimpanan data dengan Supabase.
+- Feedback loading dan error untuk operasi data.
+- Konfigurasi build Android diperbarui untuk tooling Flutter modern.
 
 ### Build
 - Flutter 3.38.9
@@ -145,19 +147,19 @@ Initial release of LendLab, a Flutter app for tracking borrowed money and items.
 - Kotlin 2.2.20
 ```
 
-## Security Notes
+## Catatan Keamanan
 
-This project keeps the original learning-project architecture:
+Project ini masih mempertahankan arsitektur awal sebagai learning project:
 
-- Authentication uses a custom `public."User"` table.
-- Passwords are stored as plain text.
-- Public tables are accessible through the anon key.
-- RLS is disabled in the restore script to preserve the current app behavior.
+- Autentikasi menggunakan tabel custom `public."User"`.
+- Password disimpan sebagai plain text.
+- Tabel publik dapat diakses melalui anon key.
+- RLS dinonaktifkan di script restore agar perilaku aplikasi saat ini tetap sama.
 
-For production use, migrate authentication to Supabase Auth, hash passwords or remove custom password storage entirely, enable RLS, and add least-privilege policies.
+Untuk penggunaan production, migrasikan autentikasi ke Supabase Auth, hash password atau hapus penyimpanan password custom sepenuhnya, aktifkan RLS, dan tambahkan policy dengan prinsip least privilege.
 
-## Maintenance Notes
+## Catatan Maintenance
 
-- `supabase_flutter` is still on `1.x`; upgrading to `2.x` requires API migration.
-- `dependency_overrides` is used for `sign_in_with_apple` so the project can build on newer Flutter versions while still using `supabase_flutter 1.x`.
-- `kotlin.incremental=false` is set to avoid Kotlin incremental cache issues on Windows when plugin source files live on a different drive from the project.
+- `supabase_flutter` masih menggunakan versi `1.x`; upgrade ke `2.x` membutuhkan migrasi API.
+- `dependency_overrides` digunakan untuk `sign_in_with_apple` agar project bisa build di versi Flutter yang lebih baru sambil tetap memakai `supabase_flutter 1.x`.
+- `kotlin.incremental=false` diset untuk menghindari masalah cache incremental Kotlin di Windows saat file source plugin berada di drive yang berbeda dari project.
