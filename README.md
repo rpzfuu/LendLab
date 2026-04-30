@@ -1,160 +1,163 @@
 # LendLab
 
-LendLab adalah aplikasi Flutter sederhana untuk mencatat peminjaman uang dan barang. Pengguna bisa membuat akun, login, menambahkan catatan peminjaman, memperbarui detail, menandai pinjaman sebagai selesai, dan melihat riwayat.
+LendLab is a Flutter app for tracking borrowed money and items. It helps users record who borrowed something, what was borrowed, when it was borrowed, and whether it has been returned.
 
-## Fitur
+The app was originally built as a lightweight lending tracker with a custom Supabase-backed data model.
 
-- Login dan registrasi berbasis tabel custom `public."User"` di Supabase.
-- Tambah peminjaman uang atau barang.
-- Lihat daftar peminjaman aktif.
-- Ubah detail peminjaman.
-- Tandai peminjaman sebagai selesai.
-- Lihat riwayat peminjaman yang sudah selesai.
-- Feedback loading dan SnackBar untuk proses Supabase.
+## Features
+
+- Register and sign in with a simple account system.
+- Add money loans.
+- Add item loans.
+- View active borrow records.
+- Search borrow records.
+- Edit borrow details.
+- Mark borrow records as completed.
+- View completed borrow history.
+- Loading and error feedback for Supabase operations.
+
+## Screens
+
+The app includes:
+
+- Splash screen
+- Login and signup screens
+- Home screen
+- Add loan type selection
+- Add money loan form
+- Add item loan form
+- Detail and edit screens
+- History screen
+- Profile screen
 
 ## Tech Stack
 
 - Flutter
+- Dart
 - GetX
-- Supabase Flutter `1.x`
+- Supabase
+- PostgreSQL
 - flutter_dotenv
-- PostgreSQL di Supabase
 
-## Persiapan
-
-Pastikan sudah tersedia:
+## Requirements
 
 - Flutter SDK
-- Android Studio atau Android SDK
-- Device/emulator Android
-- Project Supabase aktif
+- Android SDK or Android Studio
+- Supabase project
+- Android device or emulator
 
-Project ini sudah diuji dengan Flutter `3.38.9` dan Java `21` bawaan Android Studio. Konfigurasi Android memakai Gradle `8.14`, Android Gradle Plugin `8.11.1`, Kotlin `2.2.20`, dan target Java `17`.
+This project has been validated with:
 
-## Setup Environment
+- Flutter `3.38.9`
+- Dart `3.10.8`
+- Java `21`
+- Gradle `8.14`
+- Android Gradle Plugin `8.11.1`
+- Kotlin `2.2.20`
 
-1. Copy template env:
+## Configuration
 
-```powershell
-Copy-Item .env.example .env
-```
-
-2. Isi `.env` dengan credential Supabase:
+Create a `.env` file in the project root:
 
 ```env
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-File `.env` sudah masuk `.gitignore`, jadi tidak ikut ter-commit.
+A template is available in [.env.example](.env.example).
 
-## Restore Database Supabase
+## Database
 
-Untuk membuat ulang tabel dan data app, buka Supabase Dashboard lalu masuk ke:
-
-`SQL Editor` > paste isi [supabase_lendlab_restore.sql](supabase_lendlab_restore.sql) > `Run`
-
-Script tersebut hanya membuat ulang tabel yang dipakai app:
+LendLab uses two public Supabase tables:
 
 - `public."User"`
 - `public."Pinjaman"`
 
-Script juga mengisi data lama, reset sequence, memberi grant ke `anon`, `authenticated`, dan `service_role`, serta menonaktifkan RLS agar cocok dengan app saat ini yang masih memakai anon key langsung.
+The restore script [supabase_lendlab_restore.sql](supabase_lendlab_restore.sql) recreates the app tables, seed data, grants, sequences, and realtime publication entries.
 
-Jangan paste dump cluster PostgreSQL penuh ke SQL Editor Supabase. Bagian seperti `CREATE ROLE`, `\connect`, schema `auth/storage/realtime`, dan `COPY FROM stdin` tidak cocok untuk Supabase managed dashboard.
+It is designed for Supabase SQL Editor and intentionally excludes Supabase-managed cluster objects such as roles, `auth`, `storage`, and internal realtime setup.
 
-## Install Dependency
+## Getting Started
+
+Install dependencies:
 
 ```powershell
 flutter pub get
 ```
 
-## Jalankan App
-
-Lihat device yang tersedia:
-
-```powershell
-flutter devices
-```
-
-Jalankan ke device Android:
+Run the app:
 
 ```powershell
 flutter run
 ```
 
-Build APK debug:
+Build a debug APK:
 
 ```powershell
 flutter build apk --debug
 ```
 
-Output APK ada di:
+Build a release APK:
 
-```text
-build/app/outputs/flutter-apk/app-debug.apk
+```powershell
+flutter build apk --release
 ```
 
-## Validasi
+Release APK output:
+
+```text
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+## Validation
 
 ```powershell
 flutter analyze
 flutter build apk --debug
 ```
 
-Catatan: project belum memiliki folder `test`, jadi `flutter test` akan gagal dengan pesan `Test directory "test" not found`.
+There is currently no `test` directory, so automated tests are not included yet.
 
-## Release GitHub
+## Release Notes Template
 
-Untuk membuat GitHub Release, gunakan format berikut:
+Suggested GitHub release format:
 
 - Tag: `v0.1.0`
 - Target: `main`
-- Release title: `LendLab v0.1.0`
-
-Contoh release notes:
+- Title: `LendLab v0.1.0`
 
 ```markdown
 ## LendLab v0.1.0
 
-Release awal LendLab, aplikasi Flutter untuk mencatat peminjaman uang dan barang.
+Initial release of LendLab, a Flutter app for tracking borrowed money and items.
 
-### Perubahan utama
-- Menambahkan konfigurasi Supabase via `.env`.
-- Menambahkan restore database Supabase lewat `supabase_lendlab_restore.sql`.
-- Memperbaiki navigasi tombol Tambah.
-- Menambahkan loading state dan SnackBar untuk proses tambah, update, dan selesai peminjaman.
-- Memperbaiki label aksi dari Hapus menjadi Selesaikan.
-- Menambahkan fallback nama user.
-- Memperbarui konfigurasi Android agar kompatibel dengan Flutter terbaru.
+### Highlights
+- Money and item loan tracking.
+- Active loan list and completed loan history.
+- Supabase-backed persistence.
+- Loading and error feedback for data operations.
+- Android build configuration updated for modern Flutter tooling.
 
 ### Build
 - Flutter 3.38.9
 - Android Gradle Plugin 8.11.1
 - Gradle 8.14
 - Kotlin 2.2.20
-
-### Catatan
-Database Supabase perlu di-restore menggunakan `supabase_lendlab_restore.sql` sebelum app digunakan.
 ```
 
-Build APK release sebelum upload:
+## Security Notes
 
-```powershell
-flutter build apk --release
-```
+This project keeps the original learning-project architecture:
 
-Upload file berikut ke bagian release assets:
+- Authentication uses a custom `public."User"` table.
+- Passwords are stored as plain text.
+- Public tables are accessible through the anon key.
+- RLS is disabled in the restore script to preserve the current app behavior.
 
-```text
-build/app/outputs/flutter-apk/app-release.apk
-```
+For production use, migrate authentication to Supabase Auth, hash passwords or remove custom password storage entirely, enable RLS, and add least-privilege policies.
 
-Jika tag `v0.1.0` sudah pernah dipakai, naikkan versi menjadi `v0.1.1`.
+## Maintenance Notes
 
-## Catatan Maintenance
-
-- `supabase_flutter` masih versi `1.x`. Upgrade ke `2.x` perlu penyesuaian API, jadi belum dilakukan.
-- `dependency_overrides` untuk `sign_in_with_apple` dipakai agar build Android kompatibel dengan Flutter baru, karena `supabase_flutter 1.x` masih menarik constraint plugin lama.
-- Sistem login masih memakai tabel custom dan password plaintext. Untuk production, pindahkan ke Supabase Auth bawaan.
-- RLS sengaja dimatikan untuk tabel `User` dan `Pinjaman` agar app lama tetap berjalan dengan anon key. Untuk production, aktifkan RLS dan buat policy yang benar.
+- `supabase_flutter` is still on `1.x`; upgrading to `2.x` requires API migration.
+- `dependency_overrides` is used for `sign_in_with_apple` so the project can build on newer Flutter versions while still using `supabase_flutter 1.x`.
+- `kotlin.incremental=false` is set to avoid Kotlin incremental cache issues on Windows when plugin source files live on a different drive from the project.
